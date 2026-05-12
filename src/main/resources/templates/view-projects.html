@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ASPCT | Projects Board</title>
+</head>
+<body>
+
+<div>
+	<div>
+	<h1>Projects</h1>
+	<button><a th:href="@{#}">+ New project</a></button>
+	</div>
+
+	<table>
+		<thead>
+		<tr>
+			<th>Project name</th>
+			<th>Company</th>
+			<th>Deadline</th>
+			<th>Created At</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:if="${#lists.isEmpty(projects)}">
+			<td>No Projects Yet</td>
+		</tr>
+
+		<tr th:each="pj: ${projects}">
+			<td>
+				<a th:href="@{#}"
+				th:text="${pj.getProjectName()}">Project Name</a>
+			</td>
+			<td th:text="${pj.getCompanyName()}">Company</td>
+			<td th:text="${#temporals.format(pj.getDeadline(), 'dd-MM-yyyy HH:mm')}">Deadline</td>
+			<td th:text="${#temporals.format(pj.createdAt, 'dd-MM-yyyy HH:mm')}">Created</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

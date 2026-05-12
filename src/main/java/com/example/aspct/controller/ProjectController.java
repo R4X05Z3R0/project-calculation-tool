@@ -6,6 +6,7 @@ import com.example.aspct.service.ProjectService;
 import com.example.aspct.service.SubProjectService;
 import com.example.aspct.service.TaskService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +34,10 @@ public class ProjectController {
 
     // GET /projects/ — list all projects (US-2)
     @GetMapping("/")
-    public List<Project> listProjects() {
-        return projectService.getAllProjects();
+    public String listProjects(Model model) {
+        List<Project> projects = projectService.getAllProjects();
+        model.addAttribute("projects", projects);
+        return "view-projects";
     }
 
     // GET /projects/{id} — view a single project with its total hours (US-3, US-11)
