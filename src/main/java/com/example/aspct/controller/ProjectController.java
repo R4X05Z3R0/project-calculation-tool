@@ -36,39 +36,39 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
-    // GET /api/projects/{id} — view a single project with its total hours (US-3, US-11)
+    // GET /projects/{id} — view a single project with its total hours (US-3, US-11)
     @GetMapping("/{projectId}")
     public Project viewProject(@PathVariable int projectId) {
         return projectService.getProject(projectId);
     }
 
-    // GET /api/projects/{id}/total-hours — project total (US-11)
+    // GET /projects/{id}/total-hours — project total (US-11)
     @GetMapping("/{projectId}/total-hours")
     public double getTotalHours(@PathVariable int projectId) {
         return subProjectService.getTotalHoursForProject(projectId);
     }
 
-    // GET /api/projects/{id}/subprojects — all sub-projects for a project (US-3)
+    // GET /projects/{id}/subprojects — all sub-projects for a project (US-3)
     @GetMapping("/{projectId}/subprojects")
     public List<SubProject> getSubProjects(@PathVariable int projectId) {
         return subProjectService.getSubProjectsByProjectId(projectId);
     }
 
     // POST /api/projects — create a project (US-1)
-    @PostMapping
+    @PostMapping("/create")
     public Project createProject(@RequestBody Project project) {
         return projectService.createProject(project);
     }
 
     // PUT /api/projects/{id} — update a project (US-4)
-    @PutMapping("/{projectId}")
+    @PostMapping("/{projectId}/update")
     public void updateProject(@PathVariable int projectId, @RequestBody Project project) {
         project.setProjectId(projectId);
         projectService.updateProject(project);
     }
 
     // DELETE /api/projects/{id} — delete a project and cascade (US-5)
-    @DeleteMapping("/{projectId}")
+    @PostMapping("/{projectId}/delete")
     public void deleteProject(@PathVariable int projectId) {
         projectService.deleteProject(projectId);
     }
