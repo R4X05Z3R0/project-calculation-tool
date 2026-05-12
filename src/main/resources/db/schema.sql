@@ -12,7 +12,7 @@ CREATE TABLE project (
     project_name VARCHAR(255) NOT NULL,
     deadline DATE,
     description VARCHAR(1000),
-    created_at DATETIME NOT NULL
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE subproject (

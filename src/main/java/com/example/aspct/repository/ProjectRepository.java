@@ -44,8 +44,8 @@ public class ProjectRepository {
 
     public Project save(Project project) {
         String sql = """
-                INSERT INTO project (company_name, project_name, deadline, description, created_at)
-                VALUES (?, ?, ?, ?, NOW())
+                INSERT INTO project (company_name, project_name, deadline, description)
+                VALUES (?, ?, ?, ?)
                 """;
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
