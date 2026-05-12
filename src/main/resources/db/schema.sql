@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS competency;
 DROP TABLE IF EXISTS project;
 
 CREATE TABLE project (
-    project_id BIGINT PRIMARY KEY,
+    project_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     company_name VARCHAR(255) NOT NULL,
     project_name VARCHAR(255) NOT NULL,
     deadline DATE,
@@ -16,7 +16,7 @@ CREATE TABLE project (
 );
 
 CREATE TABLE subproject (
-    subproject_id BIGINT PRIMARY KEY,
+    subproject_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     project_id BIGINT NOT NULL,
     name VARCHAR(255) NOT NULL,
     deadline DATE,
@@ -29,14 +29,14 @@ CREATE TABLE subproject (
 );
 
 CREATE TABLE competency (
-    competency_id BIGINT PRIMARY KEY,
+    competency_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     daily_capacity_hours DECIMAL(5,2) NOT NULL,
     description VARCHAR(1000)
 );
 
 CREATE TABLE task (
-    task_id BIGINT PRIMARY KEY,
+    task_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     subproject_id BIGINT NOT NULL,
     competency_id BIGINT NULL,
     name VARCHAR(255) NOT NULL,

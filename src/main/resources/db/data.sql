@@ -1,3 +1,4 @@
+-- Project Table
 INSERT INTO project (
     project_id,
     company_name,
@@ -6,9 +7,13 @@ INSERT INTO project (
     description,
     created_at
 ) VALUES
-(1, 'Acme Ltd', 'Website Redesign', '2026-06-30', 'Redesign and relaunch the company website', '2026-05-04 13:00:00'),
-(2, 'Nordic Systems', 'Internal CRM Upgrade', '2026-08-15', 'Upgrade the existing CRM platform', '2026-05-04 13:10:00');
+      (1, 'Acme Ltd', 'Website Redesign', '2026-06-30', 'Redesign and relaunch the company website', '2026-05-04 13:00:00'),
+      (2, 'Nordic Systems', 'Internal CRM Upgrade', '2026-08-15', 'Upgrade the existing CRM platform', '2026-05-04 13:10:00'),
+      (3, 'Global Logistics Inc', 'Mobile Driver App', '2026-11-01', 'Develop a mobile application for logistics tracking', '2026-05-12 09:00:00'),
+      (4, 'Secure FinTech', 'Cloud Infrastructure Migration', '2026-12-20', 'Migrate on-premise servers to a secure cloud environment', '2026-05-12 10:30:00'),
+      (5, 'EcoPower Energy', 'Smart Grid Dashboard', '2027-01-15', 'Real-time monitoring system for renewable energy output', '2026-05-12 11:45:00');
 
+-- Subproject Table
 INSERT INTO subproject (
     subproject_id,
     project_id,
@@ -16,20 +21,31 @@ INSERT INTO subproject (
     deadline,
     description
 ) VALUES
-(1, 1, 'Frontend Development', '2026-06-10', 'Build the public-facing frontend'),
-(2, 1, 'Backend API', '2026-06-20', 'Create backend services and APIs'),
-(3, 2, 'Data Migration', '2026-07-30', 'Move existing CRM data to the new system');
+      (1, 1, 'Frontend Development', '2026-06-10', 'Build the public-facing frontend'),
+      (2, 1, 'Backend API', '2026-06-20', 'Create backend services and APIs'),
+      (3, 2, 'Data Migration', '2026-07-30', 'Move existing CRM data to the new system'),
+      (4, 3, 'Mobile UI/UX', '2026-09-15', 'Design and implement mobile interfaces'),
+      (5, 3, 'Geolocation Services', '2026-10-01', 'Integrate GPS and mapping features'),
+      (6, 4, 'AWS Environment Setup', '2026-11-15', 'Configure VPC, IAM, and base security layers'),
+      (7, 5, 'Data Visualization', '2026-12-01', 'Interactive charts for energy consumption'),
+      (8, 5, 'IoT Integration', '2026-12-20', 'Connect smart meters to the central dashboard');
 
+-- Competency Table
 INSERT INTO competency (
     competency_id,
     name,
     daily_capacity_hours,
     description
 ) VALUES
-(1, 'Frontend Developer', 6.50, 'Works with HTML, CSS, JavaScript and UI frameworks'),
-(2, 'Backend Developer', 7.00, 'Works with databases, APIs and server-side logic'),
-(3, 'Database Specialist', 5.50, 'Handles schema design, optimization and migration');
+      (1, 'Frontend Developer', 6.50, 'Works with HTML, CSS, JavaScript and UI frameworks'),
+      (2, 'Backend Developer', 7.00, 'Works with databases, APIs and server-side logic'),
+      (3, 'Database Specialist', 5.50, 'Handles schema design, optimization and migration'),
+      (4, 'Mobile Developer', 6.00, 'Specializes in Flutter, React Native, or Native iOS/Android'),
+      (5, 'Cloud Architect', 7.50, 'Expert in AWS/Azure infrastructure and security'),
+      (6, 'QA Engineer', 5.00, 'Focuses on automated and manual testing protocols'),
+      (7, 'Data Scientist', 6.00, 'Analyzes large datasets and creates predictive models');
 
+-- Task Table
 INSERT INTO task (
     task_id,
     subproject_id,
@@ -39,8 +55,16 @@ INSERT INTO task (
     deadline,
     description
 ) VALUES
-(1, 1, 1, 'Create landing page', 16.00, '2026-05-20', 'Design and implement the main landing page'),
-(2, 1, 1, 'Build navigation menu', 8.00, '2026-05-25', 'Implement responsive navigation'),
-(3, 2, 2, 'Create authentication API', 20.00, '2026-06-01', 'Implement login and registration endpoints'),
-(4, 3, 3, 'Prepare migration script', 24.00, '2026-07-10', 'Create scripts for CRM data migration'),
-(5, 2, NULL, 'General project coordination', 10.00, '2026-06-05', 'Coordination task without assigned competency');
+      (1, 1, 1, 'Create landing page', 16.00, '2026-05-20', 'Design and implement the main landing page'),
+      (2, 1, 1, 'Build navigation menu', 8.00, '2026-05-25', 'Implement responsive navigation'),
+      (3, 2, 2, 'Create authentication API', 20.00, '2026-06-01', 'Implement login and registration endpoints'),
+      (4, 3, 3, 'Prepare migration script', 24.00, '2026-07-10', 'Create scripts for CRM data migration'),
+      (5, 2, NULL, 'General project coordination', 10.00, '2026-06-05', 'Coordination task without assigned competency'),
+      (6, 4, 4, 'User Profile Screen', 12.00, '2026-08-30', 'Develop the driver profile and settings UI'),
+      (7, 5, 2, 'Real-time Tracking API', 30.00, '2026-09-20', 'Build the backend endpoint for location pings'),
+      (8, 6, 5, 'VPC Configuration', 15.00, '2026-10-10', 'Set up virtual private cloud with public/private subnets'),
+      (9, 6, 6, 'Security Audit', 10.00, '2026-11-01', 'Initial penetration testing on cloud setup'),
+      (10, 4, NULL, 'Stakeholder Review', 4.00, '2026-09-05', 'Present mobile mockups to the client for feedback'),
+      (11, 7, 1, 'Build D3.js Charts', 25.00, '2026-11-15', 'Create dynamic bar and line charts for energy usage'),
+      (12, 8, 2, 'IoT Gateway Setup', 40.00, '2026-12-10', 'Establish MQTT protocol connections for smart meters'),
+      (13, 7, 7, 'Predictive Usage Model', 35.00, '2026-11-25', 'Develop AI model to forecast peak energy demand');

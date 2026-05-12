@@ -15,7 +15,7 @@ import java.util.List;
 // and replace @RequestBody with @ModelAttribute.
 
 @RestController
-@RequestMapping("/api/projects")
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -31,7 +31,7 @@ public class ProjectController {
     }
 
     // GET /api/projects — list all projects (US-2)
-    @GetMapping
+    @GetMapping("/")
     public List<Project> listProjects() {
         return projectService.getAllProjects();
     }
