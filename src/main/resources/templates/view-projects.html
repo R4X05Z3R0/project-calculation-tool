@@ -30,10 +30,10 @@
 		<tr th:each="pj: ${projects}">
 			<td>
 				<a th:href="@{#}"
-				th:text="${pj.getProjectName()}">Project Name</a>
+				th:text="${pj.projectName}">Project Name</a>
 			</td>
-			<td th:text="${pj.getCompanyName()}">Company</td>
-			<td th:text="${#temporals.format(pj.getDeadline(), 'dd-MM-yyyy HH:mm')}">Deadline</td>
+			<td th:text="${pj.companyName}">Company</td>
+			<td th:text="${#temporals.format(pj.deadline, 'dd-MM-yyyy')}">Deadline</td>
 			<td th:text="${#temporals.format(pj.createdAt, 'dd-MM-yyyy HH:mm')}">Created</td>
 		</tr>
 		</tbody>
