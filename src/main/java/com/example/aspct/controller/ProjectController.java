@@ -5,6 +5,7 @@ import com.example.aspct.model.SubProject;
 import com.example.aspct.service.ProjectService;
 import com.example.aspct.service.SubProjectService;
 import com.example.aspct.service.TaskService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 // inject Model, return view name strings instead of objects,
 // and replace @RequestBody with @ModelAttribute.
 
-@RestController
+@Controller
 @RequestMapping("/projects")
 public class ProjectController {
 
@@ -30,7 +31,7 @@ public class ProjectController {
         this.taskService = taskService;
     }
 
-    // GET /api/projects — list all projects (US-2)
+    // GET /projects/ — list all projects (US-2)
     @GetMapping("/")
     public List<Project> listProjects() {
         return projectService.getAllProjects();
@@ -54,20 +55,20 @@ public class ProjectController {
         return subProjectService.getSubProjectsByProjectId(projectId);
     }
 
-    // POST /api/projects — create a project (US-1)
+    // POST /projects/create — create a project (US-1)
     @PostMapping("/create")
     public Project createProject(@RequestBody Project project) {
         return projectService.createProject(project);
     }
 
-    // PUT /api/projects/{id} — update a project (US-4)
+    // POST projects/{id}/update — update a project (US-4)
     @PostMapping("/{projectId}/update")
     public void updateProject(@PathVariable int projectId, @RequestBody Project project) {
         project.setProjectId(projectId);
         projectService.updateProject(project);
     }
 
-    // DELETE /api/projects/{id} — delete a project and cascade (US-5)
+    // DELETE /api/projects/{id}/delete — delete a project and cascade (US-5)
     @PostMapping("/{projectId}/delete")
     public void deleteProject(@PathVariable int projectId) {
         projectService.deleteProject(projectId);
