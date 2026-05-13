@@ -37,6 +37,8 @@ import java.util.List;
         }
 
         public Project() {}
+
+
         // Getters
         public int getProjectId() { return projectId; }
         public String getCompanyName() { return companyName; }

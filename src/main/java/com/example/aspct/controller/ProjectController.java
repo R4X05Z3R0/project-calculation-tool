@@ -40,12 +40,11 @@ public class ProjectController {
         return "view-projects";
     }
 
-    // GET /projects/{id} — view a single project with its total hours (US-3, US-11)
+    //TODO: I can't remember what this is for but we will figure it out
+    // GET projects/{id} — view a single project with its total hours (US-3, US-11)
     @GetMapping("/{projectId}")
-    public String viewProject(@PathVariable int projectId, Model model) {
-        Project project =  projectService.getProject(projectId);
-        model.addAttribute(project);
-        return "view-subprojects";
+    public Project viewProject(@PathVariable int projectId) {
+        return projectService.getProject(projectId);
     }
 
     // GET /projects/{id}/total-hours — project total (US-11)
@@ -56,8 +55,15 @@ public class ProjectController {
 
     // GET /projects/{id}/subprojects — all sub-projects for a project (US-3)
     @GetMapping("/{projectId}/subprojects")
-    public List<SubProject> getSubProjects(@PathVariable int projectId) {
-        return subProjectService.getSubProjectsByProjectId(projectId);
+    public String getSubProjects(@PathVariable int projectId, Model model) {
+        Project project = projectService.getProject(projectId);
+        int totalHours = (int)subProjectService.getTotalHoursForProject(project.getProjectId());
+        List<SubProject> subProjects = subProjectService.getSubProjectsWithTasks(project.getProjectId());
+
+        model.addAttribute("project", project);
+        model.addAttribute("totalHours",totalHours);
+        model.addAttribute("subProjects", subProjects);
+        return "view-subprojects";
     }
 
     // POST /projects/create — create a project (US-1)

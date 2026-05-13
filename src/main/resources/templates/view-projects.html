@@ -29,7 +29,7 @@
 
 		<tr th:each="pj: ${projects}">
 			<td>
-				<a th:href="@{#}"
+				<a th:href="@{/projects/{projectId}/subprojects(projectId=${pj.projectId})}"
 				th:text="${pj.projectName}">Project Name</a>
 			</td>
 			<td th:text="${pj.companyName}">Company</td>

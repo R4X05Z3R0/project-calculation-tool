@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ASPCT | Subprojects</title>
+</head>
+<body>
+
+<div>
+	<p><a th:href="@{/projects/}">← Back to Projects</a></p>
+
+	<h1 th:text="'Subprojects for: ' + ${project.projectName}">Project Name</h1>
+	<p th:text="${project.description}">Project Description</p>
+	<p th:text="'Approximately ' + ${totalHours} + ' hours'">Total Hours</p>
+</div>
+
+<hr>
+
+<div>
+	<table>
+		<thead>
+		<tr>
+			<th>Subproject Name</th>
+			<th>Deadline</th>
+			<th>Description</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:if="${#lists.isEmpty(subProjects)}">
+			<td>No subprojects found for this project.</td>
+		</tr>
+
+		<tr th:each="sub : ${subProjects}">
+			<td>
+				<a th:href="@{/subprojects/{id}/tasks(id=${sub.subProjectId})}"
+			        th:text="${sub.name}">Subproject Name</a>
+			</td>
+
+			<td th:text="${#temporals.format(sub.deadline, 'dd-MM-yyyy')}">Deadline</td>
+			<td th:text="${sub.description}">Description text...</td>
+			<td>
+				<a href="#">Edit</a>
+				<a href="#">Delete</a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>
