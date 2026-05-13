@@ -14,7 +14,7 @@ import java.util.List;
 // and replace @RequestBody with @ModelAttribute.
 
 @RestController
-@RequestMapping("/api/subprojects")
+@RequestMapping("/subprojects")
 public class SubProjectController {
 
     private final SubProjectService subProjectService;
@@ -50,14 +50,14 @@ public class SubProjectController {
     }
 
     // PUT /api/subprojects/{id} — update a sub-project (US-7)
-    @PutMapping("/{subProjectId}")
+    @PostMapping("/{subProjectId}/update")
     public void updateSubProject(@PathVariable int subProjectId, @RequestBody SubProject subProject) {
         subProject.setSubProjectId(subProjectId);
         subProjectService.updateSubProject(subProject);
     }
 
     // DELETE /api/subprojects/{id} — delete a sub-project and cascade tasks (US-7)
-    @DeleteMapping("/{subProjectId}")
+    @PostMapping("/{subProjectId}/delete")
     public void deleteSubProject(@PathVariable int subProjectId) {
         subProjectService.deleteSubProject(subProjectId);
     }
