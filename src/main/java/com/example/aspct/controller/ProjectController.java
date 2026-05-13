@@ -43,10 +43,8 @@ public class ProjectController {
     //TODO: I can't remember what this is for but we will figure it out
     // GET projects/{id} — view a single project with its total hours (US-3, US-11)
     @GetMapping("/{projectId}")
-    public String viewProject(@PathVariable int projectId, Model model) {
-        Project project =  projectService.getProject(projectId);
-        model.addAttribute(project);
-        return "view-subprojects";
+    public Project viewProject(@PathVariable int projectId) {
+        return projectService.getProject(projectId);
     }
 
     // GET /projects/{id}/total-hours — project total (US-11)
