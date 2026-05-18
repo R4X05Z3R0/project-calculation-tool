@@ -37,7 +37,7 @@ public class ProjectController {
     public String listProjects(Model model) {
         List<Project> projects = projectService.getAllProjects();
         model.addAttribute("projects", projects);
-        return "view-projects";
+        return "views/view-projects";
     }
 
     //TODO: I can't remember what this is for but we will figure it out
@@ -63,7 +63,7 @@ public class ProjectController {
         model.addAttribute("project", project);
         model.addAttribute("totalHours",totalHours);
         model.addAttribute("subProjects", subProjects);
-        return "view-subprojects";
+        return "views/view-subprojects";
     }
 
     // POST /projects/create — create a project (US-1)
