@@ -48,7 +48,7 @@ public class SubProjectController {
         model.addAttribute("tasks", tasks);
         model.addAttribute("subProject", subProject);
         model.addAttribute("totalHours", totalHours);
-        return "view-tasks";
+        return "views/view-tasks";
     }
 
     // POST /api/subprojects — create a sub-project under a project (US-6)
