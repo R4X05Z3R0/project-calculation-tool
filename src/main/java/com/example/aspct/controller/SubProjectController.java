@@ -4,6 +4,8 @@ import com.example.aspct.model.SubProject;
 import com.example.aspct.model.Task;
 import com.example.aspct.service.SubProjectService;
 import com.example.aspct.service.TaskService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
 // inject Model, return view name strings instead of objects,
 // and replace @RequestBody with @ModelAttribute.
 
-@RestController
+@Controller
 @RequestMapping("/subprojects")
 public class SubProjectController {
 
@@ -39,8 +41,14 @@ public class SubProjectController {
 
     // GET /api/subprojects/{id}/tasks — all tasks for a sub-project
     @GetMapping("/{subProjectId}/tasks")
-    public List<Task> getTasks(@PathVariable int subProjectId) {
-        return taskService.getTasksBySubProjectId(subProjectId);
+    public String getTasks(@PathVariable int subProjectId, Model model) {
+        SubProject subProject = subProjectService.getSubProject(subProjectId);
+        List<Task> tasks = taskService.getTasksBySubProjectId(subProjectId);
+        int totalHours = (int)taskService.getTotalHoursForSubProject(subProjectId);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("subProject", subProject);
+        model.addAttribute("totalHours", totalHours);
+        return "view-tasks";
     }
 
     // POST /api/subprojects — create a sub-project under a project (US-6)
