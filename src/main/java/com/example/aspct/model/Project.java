@@ -28,7 +28,17 @@ import java.util.List;
                     = createdAt;
         }
 
+        public Project(String companyName, String projectName, LocalDate deadline, String description){
+            this.companyName = companyName;
+            this.projectName = projectName;
+            this.deadline = deadline;
+            this.description = description;
+
+        }
+
         public Project() {}
+
+
         // Getters
         public int getProjectId() { return projectId; }
         public String getCompanyName() { return companyName; }

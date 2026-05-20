@@ -5,6 +5,8 @@ import com.example.aspct.model.SubProject;
 import com.example.aspct.service.ProjectService;
 import com.example.aspct.service.SubProjectService;
 import com.example.aspct.service.TaskService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +16,8 @@ import java.util.List;
 // inject Model, return view name strings instead of objects,
 // and replace @RequestBody with @ModelAttribute.
 
-@RestController
-@RequestMapping("/api/projects")
+@Controller
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -30,45 +32,55 @@ public class ProjectController {
         this.taskService = taskService;
     }
 
-    // GET /api/projects — list all projects (US-2)
-    @GetMapping
-    public List<Project> listProjects() {
-        return projectService.getAllProjects();
+    // GET /projects/ — list all projects (US-2)
+    @GetMapping("/")
+    public String listProjects(Model model) {
+        List<Project> projects = projectService.getAllProjects();
+        model.addAttribute("projects", projects);
+        return "view-projects";
     }
 
-    // GET /api/projects/{id} — view a single project with its total hours (US-3, US-11)
+    //TODO: I can't remember what this is for but we will figure it out
+    // GET projects/{id} — view a single project with its total hours (US-3, US-11)
     @GetMapping("/{projectId}")
     public Project viewProject(@PathVariable int projectId) {
         return projectService.getProject(projectId);
     }
 
-    // GET /api/projects/{id}/total-hours — project total (US-11)
+    // GET /projects/{id}/total-hours — project total (US-11)
     @GetMapping("/{projectId}/total-hours")
     public double getTotalHours(@PathVariable int projectId) {
         return subProjectService.getTotalHoursForProject(projectId);
     }
 
-    // GET /api/projects/{id}/subprojects — all sub-projects for a project (US-3)
+    // GET /projects/{id}/subprojects — all sub-projects for a project (US-3)
     @GetMapping("/{projectId}/subprojects")
-    public List<SubProject> getSubProjects(@PathVariable int projectId) {
-        return subProjectService.getSubProjectsByProjectId(projectId);
+    public String getSubProjects(@PathVariable int projectId, Model model) {
+        Project project = projectService.getProject(projectId);
+        int totalHours = (int)subProjectService.getTotalHoursForProject(project.getProjectId());
+        List<SubProject> subProjects = subProjectService.getSubProjectsWithTasks(project.getProjectId());
+
+        model.addAttribute("project", project);
+        model.addAttribute("totalHours",totalHours);
+        model.addAttribute("subProjects", subProjects);
+        return "view-subprojects";
     }
 
-    // POST /api/projects — create a project (US-1)
-    @PostMapping
+    // POST /projects/create — create a project (US-1)
+    @PostMapping("/create")
     public Project createProject(@RequestBody Project project) {
         return projectService.createProject(project);
     }
 
-    // PUT /api/projects/{id} — update a project (US-4)
-    @PutMapping("/{projectId}")
+    // POST projects/{id}/update — update a project (US-4)
+    @PostMapping("/{projectId}/update")
     public void updateProject(@PathVariable int projectId, @RequestBody Project project) {
         project.setProjectId(projectId);
         projectService.updateProject(project);
     }
 
-    // DELETE /api/projects/{id} — delete a project and cascade (US-5)
-    @DeleteMapping("/{projectId}")
+    // DELETE /api/projects/{id}/delete — delete a project and cascade (US-5)
+    @PostMapping("/{projectId}/delete")
     public void deleteProject(@PathVariable int projectId) {
         projectService.deleteProject(projectId);
     }
