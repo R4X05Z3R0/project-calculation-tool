@@ -27,7 +27,7 @@ public class SubProjectController {
         this.taskService = taskService;
     }
 
-    // GET /api/subprojects/{id} — single sub-project (US-3)
+    // GET /subprojects/{id} — single sub-project (US-3)
     @GetMapping("/{subProjectId}")
     public SubProject getSubProject(@PathVariable int subProjectId) {
         return subProjectService.getSubProject(subProjectId);
