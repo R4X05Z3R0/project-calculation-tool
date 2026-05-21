@@ -66,6 +66,14 @@ public class ProjectController {
         return "views/view-subprojects";
     }
 
+    //GET /projects/{id}/edit-form - Shows edit form for project info
+    @GetMapping("/{projectId}/edit-form")
+    public String editProject(@PathVariable int projectId, Model model){
+        Project projectToEdit = projectService.getProject(projectId);
+        model.addAttribute("project", projectToEdit);
+        return "edit/edit-project";
+    }
+
     // POST /projects/create — create a project (US-1)
     @PostMapping("/create")
     public Project createProject(@RequestBody Project project) {

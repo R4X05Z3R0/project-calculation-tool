@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASPCT | Edit Project</title>
+</head>
+<body>
+
+<div>
+  <p><a th:href="@{/projects/}">← Cancel & Back to Projects</a></p>
+  <h1>Edit Project</h1>
+</div>
+
+<hr>
+
+<div>
+  <form th:action="@{/projects/{projectId}/update(projectId = ${project.projectId})}" th:object="${project}" method="POST">
+    <!-- Hidden fields preserve internal variables during the POST request -->
+    <input type="hidden" th:field="*{projectId}" />
+    <input type="hidden" th:field="*{createdAt}" />
+
+    <div>
+      <label for="projectName">Project Name:</label><br>
+      <input type="text" id="projectName" th:field="*{projectName}" required />
+    </div>
+
+    <br>
+
+    <div>
+      <label for="companyName">Company Name:</label><br>
+      <input type="text" id="companyName" th:field="*{companyName}" required />
+    </div>
+
+    <br>
+
+    <div>
+      <label for="description">Description:</label><br>
+      <textarea id="description" th:field="*{description}" rows="5" cols="40"></textarea>
+    </div>
+
+    <br>
+
+    <div>
+      <label for="deadline">Project Deadline:</label><br>
+      <input type="date" id="deadline" th:field="*{deadline}" required />
+    </div>
+
+    <br>
+
+    <div>
+      <button type="submit">Save Changes</button>
+      <button type="button"><a th:href="@{/projects/}" style="text-decoration: none; color: red;">Cancel</a></button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
