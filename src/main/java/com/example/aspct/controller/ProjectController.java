@@ -86,7 +86,6 @@ public class ProjectController {
                                 @ModelAttribute Project project) {
 
         project.setProjectId(projectId);
-        System.out.println(project.getProjectId());
         projectService.updateProject(project);
 
         return "redirect:/projects/";
