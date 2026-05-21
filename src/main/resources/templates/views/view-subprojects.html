@@ -25,6 +25,7 @@
 			<th>Subproject Name</th>
 			<th>Deadline</th>
 			<th>Description</th>
+			<th>Task Count</th>
 			<th>Actions</th>
 		</tr>
 		</thead>
@@ -41,6 +42,7 @@
 
 			<td th:text="${#temporals.format(sub.deadline, 'dd-MM-yyyy')}">Deadline</td>
 			<td th:text="${sub.description}">Description text...</td>
+			<td th:text="${#lists.size(sub.tasks)}">0</td>
 			<td>
 				<a href="#">Edit</a>
 				<a href="#">Delete</a>
