@@ -82,9 +82,14 @@ public class ProjectController {
 
     // POST projects/{id}/update — update a project (US-4)
     @PostMapping("/{projectId}/update")
-    public void updateProject(@PathVariable int projectId, @RequestBody Project project) {
+    public String updateProject(@PathVariable int projectId,
+                                @ModelAttribute Project project) {
+
         project.setProjectId(projectId);
+        System.out.println(project.getProjectId());
         projectService.updateProject(project);
+
+        return "redirect:/projects/";
     }
 
     // DELETE /api/projects/{id}/delete — delete a project and cascade (US-5)
