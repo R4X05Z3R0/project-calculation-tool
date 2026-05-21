@@ -55,7 +55,7 @@ public class ProjectControllerTest{
     }
 
     @Test
-    public void testViewsListOfProjects () throws Exception{
+    public void testViewsListOfProjects() throws Exception{
 
         //Act
         Mockito.when(projectService.getAllProjects()).thenReturn(testProjectList);
@@ -66,5 +66,17 @@ public class ProjectControllerTest{
                 .andExpect(view().name("views/view-projects"))
                 .andExpect(model().attributeExists("projects"))
                 .andExpect(model().attribute("projects",hasSize(1)));
+    }
+
+    @Test
+    public void testProjectEditForm() throws Exception{
+        //Act
+        Mockito.when(projectService.getProject(1)).thenReturn(testProject);
+
+        mockMvc.perform(get("/projects/1/edit-form"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("edit/edit-project"))
+                .andExpect(model().attributeExists("project"))
+                .andExpect(model().attribute("project", testProject));
     }
 }
