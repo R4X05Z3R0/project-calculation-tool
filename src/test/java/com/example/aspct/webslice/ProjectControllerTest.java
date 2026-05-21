@@ -6,6 +6,7 @@ import com.example.aspct.model.SubProject;
 import com.example.aspct.service.ProjectService;
 import com.example.aspct.service.SubProjectService;
 import com.example.aspct.service.TaskService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(ProjectController.class)
 public class ProjectControllerTest{
@@ -35,10 +36,13 @@ public class ProjectControllerTest{
     @MockitoBean
     private TaskService taskService;
 
-    @Test
-    public void testViewsListOfProjects () throws Exception{
-        //Arrange
-        Project p1 = new Project(
+    private Project testProject; //Test Project
+    private List<Project> testProjectList; //List of test projects
+
+    //Starts before every individual test
+    @BeforeEach
+    public void setUp(){
+        testProject = new Project(
                 1,
                 "Stark Industries",
                 "Arc Reactor",
@@ -47,10 +51,14 @@ public class ProjectControllerTest{
                 LocalDateTime.now()
         );
 
-        List<Project> fakeProjectList = List.of(p1);
+        testProjectList = List.of(testProject);
+    }
+
+    @Test
+    public void testViewsListOfProjects () throws Exception{
 
         //Act
-        Mockito.when(projectService.getAllProjects()).thenReturn(fakeProjectList);
+        Mockito.when(projectService.getAllProjects()).thenReturn(testProjectList);
 
         //Assert
         mockMvc.perform(get("/projects/"))
