@@ -49,10 +49,8 @@ public class TaskController {
         task.setTaskId(taskId);
         taskService.updateTask(task);
 
-        return "redirect:" + ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/subprojects/{subProjectId}/edit-form")
-                .buildAndExpand(task.getSubProjectId())
-                .toUriString();
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/subprojects/" + task.getSubProjectId() + "/tasks";
     }
 
     // Post /tasks/{id} — delete a task (US-9)

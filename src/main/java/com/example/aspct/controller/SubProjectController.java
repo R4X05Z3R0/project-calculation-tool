@@ -73,10 +73,8 @@ public class SubProjectController {
         subProject.setSubProjectId(subProjectId);
         subProjectService.updateSubProject(subProject);
 
-        return "redirect:" + ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/projects/{projectId}/subprojects")
-                .buildAndExpand(subProject.getProjectId())
-                .toUriString();
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/projects/" + subProject.getProjectId() + "/subprojects";
     }
 
     // DELETE /api/subprojects/{id} — delete a sub-project and cascade tasks (US-7)
