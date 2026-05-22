@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ASPCT | Edit Task</title>
+</head>
+<body>
+
+<div>
+	<!-- Links cleanly back to the task list view for this specific parent subproject -->
+	<p><a th:href="@{/subprojects/{subProjectId}/tasks(subProjectId=${task.subProjectId})}">← Cancel & Back to Tasks</a></p>
+	<h1>Edit Task</h1>
+</div>
+
+<hr>
+
+<div>
+	<!-- Form targeting your preferred specific path variable key strategy -->
+	<form th:action="@{/tasks/{taskId}/update(taskId = ${task.taskId})}" th:object="${task}" method="POST">
+
+		<!-- Hidden fields to keep track of critical relationship and row keys across the POST wire -->
+		<input type="hidden" th:field="*{taskId}" />
+		<input type="hidden" th:field="*{subProjectId}" />
+
+		<div>
+			<label for="name">Task Name:</label><br>
+			<input type="text" id="name" th:field="*{name}" required />
+		</div>
+
+		<br>
+
+		<div>
+			<label for="estimatedHours">Estimated Hours:</label><br>
+			<!-- Uses step="0.1" since your Java property is a double -->
+			<input type="number" id="estimatedHours" th:field="*{estimatedHours}" step="0.1" min="0" required />
+		</div>
+
+		<br>
+
+		<div>
+			<label for="description">Description:</label><br>
+			<textarea id="description" th:field="*{description}" rows="5" cols="40"></textarea>
+		</div>
+
+		<br>
+
+		<div>
+			<label for="deadline">Task Deadline:</label><br>
+			<input type="date" id="deadline" th:field="*{deadline}" required />
+		</div>
+
+		<br>
+
+		<div>
+			<button type="submit">Save Changes</button>
+			<button type="button"><a th:href="@{/subprojects/{subProjectId}/tasks(subProjectId=${task.subProjectId})}" style="text-decoration: none; color: red;">Cancel</a></button>
+		</div>
+	</form>
+</div>
+
+</body>
+</html>
