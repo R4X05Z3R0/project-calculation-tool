@@ -106,4 +106,25 @@ public class ProjectControllerTest{
         assertEquals("Alpha Industries", gotcha.getCompanyName());
         assertEquals("2026-05-22", gotcha.getDeadline().toString());
     }
+
+    @Test
+    public void testSubProjectView_WithTasks() throws Exception{
+        //Arrange
+        int fakeID = 7;
+        SubProject testSub = new SubProject();
+        List<SubProject> testSubList = List.of(testSub);
+
+        testProject.setProjectId(fakeID);
+        //False data to retrn
+        Mockito.when(projectService.getProject(7)).thenReturn(testProject);
+        Mockito.when(subProjectService.getTotalHoursForProject(7)).thenReturn(67.0);
+        Mockito.when(subProjectService.getSubProjectsWithTasks(7)).thenReturn(testSubList);
+
+        mockMvc.perform(get("/projects/"+ fakeID +"/subprojects"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("views/view-subprojects"))
+                .andExpect(model().attribute("project",testProject))
+                .andExpect(model().attribute("totalHours", 67))
+                .andExpect(model().attribute("subProjects", testSubList));
+    }
 }
