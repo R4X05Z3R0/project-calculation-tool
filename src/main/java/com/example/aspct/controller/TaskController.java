@@ -5,6 +5,7 @@ import com.example.aspct.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 // REST FOUNDATION — test all endpoints with Postman before adding HTML views.
 // To evolve to MVC: replace @RestController with @Controller,
@@ -48,7 +49,10 @@ public class TaskController {
         task.setTaskId(taskId);
         taskService.updateTask(task);
 
-        return "redirect:/subprojects/"+ task.getSubProjectId() +"/tasks";
+        return "redirect:" + ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/subprojects/{subProjectId}/edit-form")
+                .buildAndExpand(task.getSubProjectId())
+                .toUriString();
     }
 
     // Post /tasks/{id} — delete a task (US-9)

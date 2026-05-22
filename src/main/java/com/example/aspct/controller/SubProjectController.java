@@ -7,6 +7,7 @@ import com.example.aspct.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -72,7 +73,10 @@ public class SubProjectController {
         subProject.setSubProjectId(subProjectId);
         subProjectService.updateSubProject(subProject);
 
-        return "redirect:/projects/"+ subProject.getProjectId() +"/subprojects";
+        return "redirect:" + ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/projects/{projectId}/subprojects")
+                .buildAndExpand(subProject.getProjectId())
+                .toUriString();
     }
 
     // DELETE /api/subprojects/{id} — delete a sub-project and cascade tasks (US-7)
