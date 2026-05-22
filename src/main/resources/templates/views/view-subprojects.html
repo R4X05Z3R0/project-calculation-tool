@@ -44,7 +44,7 @@
 			<td th:text="${sub.description}">Description text...</td>
 			<td th:text="${#lists.size(sub.tasks)}">0</td>
 			<td>
-				<a href="#">Edit</a>
+				<a th:href="@{/subprojects/{subProjectId}/edit-form(subProjectId = ${sub.subProjectId})}">Edit</a>
 				<a href="#">Delete</a>
 			</td>
 		</tr>

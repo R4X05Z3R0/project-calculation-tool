@@ -51,17 +51,28 @@ public class SubProjectController {
         return "views/view-tasks";
     }
 
+    //GET /subprojects/id/edit-form - Edit form for subproject
+    @GetMapping("/{subProjectId}/edit-form")
+    public String editSubProject(@PathVariable int subProjectId, Model model){
+        SubProject subProjectToEdit = subProjectService.getSubProject(subProjectId);
+        model.addAttribute("subProject", subProjectToEdit);
+
+        return "edit/edit-subprojects";
+    }
+
     // POST /api/subprojects — create a sub-project under a project (US-6)
     @PostMapping
     public SubProject createSubProject(@RequestBody SubProject subProject) {
         return subProjectService.createSubProject(subProject);
     }
 
-    // PUT /api/subprojects/{id} — update a sub-project (US-7)
+    // POST /subprojects/{id}/update — update a sub-project (US-7)
     @PostMapping("/{subProjectId}/update")
-    public void updateSubProject(@PathVariable int subProjectId, @RequestBody SubProject subProject) {
+    public String updateSubProject(@PathVariable int subProjectId, @ModelAttribute SubProject subProject) {
         subProject.setSubProjectId(subProjectId);
         subProjectService.updateSubProject(subProject);
+
+        return "redirect:/projects/"+ subProject.getProjectId() +"/subprojects";
     }
 
     // DELETE /api/subprojects/{id} — delete a sub-project and cascade tasks (US-7)
