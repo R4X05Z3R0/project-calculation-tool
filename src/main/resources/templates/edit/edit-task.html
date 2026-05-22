@@ -46,7 +46,11 @@
 		<br>
 
 		<div>
-			<label for="deadline">Task Deadline:</label><br>
+			<label for="deadline">Task Deadline:</label>
+			<span style="color: gray; font-size: 0.9em;"
+			      th:text="' (Current: ' + ${#temporals.format(task.deadline, 'dd-MM-yyyy')} + ')'">
+          (Current: 22-05-20XX)</span>
+			<br>
 			<input type="date" id="deadline" th:field="*{deadline}" required />
 		</div>
 
