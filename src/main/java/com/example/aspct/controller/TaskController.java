@@ -48,7 +48,7 @@ public class TaskController {
         task.setTaskId(taskId);
         taskService.updateTask(task);
 
-        return "redirect:/subprojects/ " + task.getSubProjectId() +"/tasks";
+        return "redirect:/subprojects/"+ task.getSubProjectId() +"/tasks";
     }
 
     // Post /tasks/{id} — delete a task (US-9)
