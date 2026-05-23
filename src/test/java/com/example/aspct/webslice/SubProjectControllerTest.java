@@ -42,7 +42,7 @@ public class SubProjectControllerTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize sample SubProject data
+        // Dummy subproject
         testSubProject = new SubProject();
         testSubProject.setSubProjectId(10);
         testSubProject.setProjectId(5); // Linked to parent project ID 5
@@ -50,7 +50,7 @@ public class SubProjectControllerTest {
         testSubProject.setDescription("Energy Redirection");
         testSubProject.setDeadline(LocalDate.now());
 
-        // Initialize sample Task data
+        // Dummy task data
         testTask = new Task();
         testTask.setTaskId(101);
         testTask.setSubProjectId(10);
@@ -96,7 +96,7 @@ public class SubProjectControllerTest {
         int subProjectId = 10;
         List<Task> taskList = List.of(testTask);
 
-        // Arrange Mocks
+        // Arrange
         Mockito.when(subProjectService.getSubProject(subProjectId)).thenReturn(testSubProject);
         Mockito.when(taskService.getTasksBySubProjectId(subProjectId)).thenReturn(taskList);
         Mockito.when(taskService.getTotalHoursForSubProject(subProjectId)).thenReturn(42.0);
@@ -115,7 +115,7 @@ public class SubProjectControllerTest {
     public void testEditSubProjectForm_ReturnsCorrectViewAndModel() throws Exception {
         int subProjectId = 10;
 
-        // Arrange Mock
+        // Arrange
         Mockito.when(subProjectService.getSubProject(subProjectId)).thenReturn(testSubProject);
 
         // Act & Assert
@@ -157,8 +157,8 @@ public class SubProjectControllerTest {
 
     @Test
     public void testDeleteSubProject_ExecutesServiceAndRedirectsToParentDashboard() throws Exception {
-        int targetSubId = 10;
-        int parentProjectId = 5;
+        int targetSubId = testSubProject.getSubProjectId();
+        int parentProjectId = testSubProject.getProjectId();
 
         mockMvc.perform(post("/subprojects/" + targetSubId + "/delete")
                         .contentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED)
