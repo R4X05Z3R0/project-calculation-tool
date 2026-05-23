@@ -66,6 +66,14 @@ public class ProjectController {
         return "views/view-subprojects";
     }
 
+    //GET /projects/{id}/edit-form - Shows edit form for project info
+    @GetMapping("/{projectId}/edit-form")
+    public String editProject(@PathVariable int projectId, Model model){
+        Project projectToEdit = projectService.getProject(projectId);
+        model.addAttribute("project", projectToEdit);
+        return "edit/edit-project";
+    }
+
     // POST /projects/create — create a project (US-1)
     @PostMapping("/create")
     public Project createProject(@RequestBody Project project) {
@@ -74,9 +82,13 @@ public class ProjectController {
 
     // POST projects/{id}/update — update a project (US-4)
     @PostMapping("/{projectId}/update")
-    public void updateProject(@PathVariable int projectId, @RequestBody Project project) {
+    public String updateProject(@PathVariable int projectId,
+                                @ModelAttribute Project project) {
+
         project.setProjectId(projectId);
         projectService.updateProject(project);
+
+        return "redirect:/projects/";
     }
 
     // DELETE /api/projects/{id}/delete — delete a project and cascade (US-5)

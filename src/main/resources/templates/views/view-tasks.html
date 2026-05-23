@@ -56,7 +56,7 @@
 			<td th:text="${task.description}">Description text...</td>
 			<td>
 				<!-- Dynamic action links using taskId -->
-				<a th:href="@{/tasks/-edit/{id}(id=${task.taskId})}">Edit</a> |
+				<a th:href="@{/tasks/{taskId}/edit (taskId=${task.taskId})}">Edit</a> |
 				<a th:href="@{/tasks/-delete/{id}(id=${task.taskId})}">Delete</a>
 			</td>
 		</tr>
