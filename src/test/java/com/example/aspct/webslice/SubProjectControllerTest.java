@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,7 +42,7 @@ public class SubProjectControllerTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize sample SubProject data
+        // Dummy subproject
         testSubProject = new SubProject();
         testSubProject.setSubProjectId(10);
         testSubProject.setProjectId(5); // Linked to parent project ID 5
@@ -50,7 +50,7 @@ public class SubProjectControllerTest {
         testSubProject.setDescription("Energy Redirection");
         testSubProject.setDeadline(LocalDate.now());
 
-        // Initialize sample Task data
+        // Dummy task data
         testTask = new Task();
         testTask.setTaskId(101);
         testTask.setSubProjectId(10);
@@ -58,11 +58,45 @@ public class SubProjectControllerTest {
     }
 
     @Test
+    public void testShowCreateForm_PrepopulatesParentProjectId() throws Exception {
+        int parentId = 5;
+
+        mockMvc.perform(get("/subprojects/create-form")
+                        .param("projectId", String.valueOf(parentId)))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("create/create-subproject"))
+                .andExpect(model().attributeExists("subProject"))
+                // Asserts the instantiated model object inside the model maps the correct ID
+                .andExpect(model().attribute("subProject", hasProperty("projectId", is(parentId))));
+    }
+
+    @Test
+    public void testCreateSubProject_SavesFormFieldsAndRedirects() throws Exception {
+        ArgumentCaptor<SubProject> captor = ArgumentCaptor.forClass(SubProject.class);
+
+        mockMvc.perform(post("/subprojects/create")
+                        .contentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("projectId", "5")
+                        .param("name", "Vibranium Shield Calibration")
+                        .param("deadline", "2026-09-18")
+                        .param("description", "Testing physics defying engine"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/projects/5/subprojects"));
+
+        verify(subProjectService).createSubProject(captor.capture());
+
+        SubProject captured = captor.getValue();
+        assertEquals(5, captured.getProjectId());
+        assertEquals("Vibranium Shield Calibration", captured.getName());
+        assertEquals("2026-09-18", captured.getDeadline().toString());
+        assertEquals("Testing physics defying engine", captured.getDescription());
+    }
+    @Test
     public void testGetTasks_ReturnsViewWithTasksAndHours() throws Exception {
         int subProjectId = 10;
         List<Task> taskList = List.of(testTask);
 
-        // Arrange Mocks
+        // Arrange
         Mockito.when(subProjectService.getSubProject(subProjectId)).thenReturn(testSubProject);
         Mockito.when(taskService.getTasksBySubProjectId(subProjectId)).thenReturn(taskList);
         Mockito.when(taskService.getTotalHoursForSubProject(subProjectId)).thenReturn(42.0);
@@ -81,7 +115,7 @@ public class SubProjectControllerTest {
     public void testEditSubProjectForm_ReturnsCorrectViewAndModel() throws Exception {
         int subProjectId = 10;
 
-        // Arrange Mock
+        // Arrange
         Mockito.when(subProjectService.getSubProject(subProjectId)).thenReturn(testSubProject);
 
         // Act & Assert
@@ -118,5 +152,20 @@ public class SubProjectControllerTest {
         assertEquals("2026-05-22", capturedSubProject.getDeadline().toString());
         assertEquals("New Description", capturedSubProject.getDescription());
         assertEquals("Arc Reactor Propulsion - Optimized", capturedSubProject.getName());
+    }
+
+
+    @Test
+    public void testDeleteSubProject_ExecutesServiceAndRedirectsToParentDashboard() throws Exception {
+        int targetSubId = testSubProject.getSubProjectId();
+        int parentProjectId = testSubProject.getProjectId();
+
+        mockMvc.perform(post("/subprojects/" + targetSubId + "/delete")
+                        .contentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("projectId", String.valueOf(parentProjectId)))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/projects/5/subprojects"));
+
+        verify(subProjectService).deleteSubProject(targetSubId);
     }
 }

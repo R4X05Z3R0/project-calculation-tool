@@ -58,6 +58,36 @@ public class ProjectControllerTest{
     }
 
     @Test
+    public void testShowCreateForm_ReturnsViewWithNewProjectModel() throws Exception {
+        mockMvc.perform(get("/projects/create-form"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("create/create-project"))
+                .andExpect(model().attributeExists("project"));
+    }
+
+    @Test
+    public void testCreateProject_BindsFieldsCorrectlyAndRedirects() throws Exception {
+        ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
+
+        mockMvc.perform(post("/projects/create")
+                        .contentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("companyName", "Pym Technologies")
+                        .param("projectName", "Ant-Man Suit Scaling")
+                        .param("deadline", "2026-08-14")
+                        .param("description", "Atomic mass and scale displacement trials"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/projects/"));
+
+        verify(projectService).createProject(captor.capture());
+
+        Project validatedProject = captor.getValue();
+        assertEquals("Pym Technologies", validatedProject.getCompanyName());
+        assertEquals("Ant-Man Suit Scaling", validatedProject.getProjectName());
+        assertEquals("2026-08-14", validatedProject.getDeadline().toString());
+        assertEquals("Atomic mass and scale displacement trials", validatedProject.getDescription());
+    }
+
+    @Test
     public void testViewsListOfProjects() throws Exception{
 
         //Act

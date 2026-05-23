@@ -5,7 +5,6 @@ import com.example.aspct.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 // REST FOUNDATION — test all endpoints with Postman before adding HTML views.
 // To evolve to MVC: replace @RestController with @Controller,
@@ -22,16 +21,23 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    // GET /tasks/{id} — single task (US-8)
-    @GetMapping("/{taskId}")
-    public Task getTask(@PathVariable int taskId) {
-        return taskService.getTask(taskId);
+    // GET /tasks/create-form — Task view form
+    @GetMapping("/create-form")
+    public String getTask(@RequestParam int subProjectId, Model model) {
+        Task newTask = new Task();
+        newTask.setSubProjectId(subProjectId);
+
+        model.addAttribute("task", newTask);
+        return "create/create-task";
     }
 
     // POST /tasks — create a task under a sub-project (US-8)
-    @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskService.createTask(task);
+    @PostMapping("/create")
+    public String createTask(@ModelAttribute Task task) {
+        taskService.createTask(task);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/subprojects/" + task.getSubProjectId() +"/tasks";
     }
 
     // GET /tasks/{id}/edit — Edit form for tasks
@@ -53,9 +59,12 @@ public class TaskController {
         return "redirect:/subprojects/" + task.getSubProjectId() + "/tasks";
     }
 
-    // Post /tasks/{id} — delete a task (US-9)
+    // Post /tasks/{id}/delete — delete a task (US-9)
     @PostMapping ("/{taskId}/delete")
-    public void deleteTask(@PathVariable int taskId) {
+    public String deleteTask(@PathVariable int taskId, @RequestParam int subProjectId) {
         taskService.deleteTask(taskId);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/subprojects/" + subProjectId +"/tasks";
     }
 }

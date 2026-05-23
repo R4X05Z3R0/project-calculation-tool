@@ -12,7 +12,7 @@
 	<p><a th:href="@{/projects/{subProjectId}/subprojects(subProjectId = ${subProject.projectId})}">← Back to Subproject</a></p>
 
 	<h1 th:text="'Tasks for: ' + ${subProject.name}">Subproject Name</h1>
-	<button><a th:href="@{/tasks/new(subProjectId=${subProject.subProjectId})}">+ New Task</a></button>
+	<button><a th:href="@{/tasks/create-form(subProjectId=${subProject.subProjectId})}">+ New Task</a></button>
 	<p th:text="${subProject.description}">Subproject Description</p>
 	<p th:text="'Approximately ' + ${totalHours} + ' hours'">Total Hours</p>
 </div>
@@ -57,7 +57,15 @@
 			<td>
 				<!-- Dynamic action links using taskId -->
 				<a th:href="@{/tasks/{taskId}/edit (taskId=${task.taskId})}">Edit</a> |
-				<a th:href="@{/tasks/-delete/{id}(id=${task.taskId})}">Delete</a>
+				<form th:action="@{/tasks/{taskId}/delete(taskId=${task.taskId})}" method="post" style="display:inline; margin-left: 5px;">
+					<!-- We supply the active parent project ID so the controller can return here -->
+					<input type="hidden" name="subProjectId" th:value="${subProject.subProjectId}" />
+					<button type="submit"
+					        style="background:none; border:none; color:red; text-decoration:none; cursor:pointer; padding:0; font-family:inherit; font-size:inherit;"
+					        th:attr="onclick='return confirm(\'Are you sure you want to delete ' + ${task.name} + '?\');'">
+						Delete
+					</button>
+				</form>
 			</td>
 		</tr>
 		</tbody>
