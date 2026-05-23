@@ -89,7 +89,7 @@ public class ProjectController {
         return "redirect:/projects/";
     }
 
-    // DELETE /api/projects/{id}/delete — delete a project and cascade (US-5)
+    // DELETE /projects/{id}/delete — delete a project and cascade (US-5)
     @PostMapping("/{projectId}/delete")
     public void deleteProject(@PathVariable int projectId) {
         projectService.deleteProject(projectId);
