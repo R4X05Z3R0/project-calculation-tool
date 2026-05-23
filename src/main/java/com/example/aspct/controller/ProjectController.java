@@ -27,6 +27,8 @@ public class ProjectController {
         this.taskService = taskService;
     }
 
+    //I am adding the comments so I don't get confused... It isn't AI. Just saying.
+
 //    // GET /projects/ — list all projects
 //    @GetMapping("/")
 //    public String listProjects(Model model) {
@@ -34,7 +36,8 @@ public class ProjectController {
 //        model.addAttribute("projects", projects);
 //        return "views/view-projects";
 //    }
-
+//
+    // GET /projects/ — list all active projects
     @GetMapping("/")
     public String listProjects(Model model) {
         List<Project> projects = projectService.getAllActiveProjects();

@@ -40,7 +40,7 @@ public class TaskService {
         taskRepository.deleteById(taskId);
     }
 
-    // CALCULATE total estimated hours for a sub-project (US-10)
+    // CALCULATE total estimated hours for a sub-project
     // Responsibility belongs here, not in the SubProject model
     public double getTotalHoursForSubProject(int subProjectId) {
         List<Task> tasks = taskRepository.findBySubProjectId(subProjectId);

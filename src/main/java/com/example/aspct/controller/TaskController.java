@@ -6,11 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-// REST FOUNDATION — test all endpoints with Postman before adding HTML views.
-// To evolve to MVC: replace @RestController with @Controller,
-// inject Model, return view name strings instead of objects,
-// and replace @RequestBody with @ModelAttribute.
-
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
@@ -31,7 +26,7 @@ public class TaskController {
         return "create/create-task";
     }
 
-    // POST /tasks — create a task under a sub-project (US-8)
+    // POST /tasks — create a task under a sub-project
     @PostMapping("/create")
     public String createTask(@ModelAttribute Task task) {
         taskService.createTask(task);
