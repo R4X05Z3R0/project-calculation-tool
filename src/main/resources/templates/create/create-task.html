@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Create Task</title>
+</head>
+<body>
+<h2>Add a New Task</h2>
+
+<form th:action="@{/tasks/create}" th:object="${task}" method="post">
+	<!-- CRITICAL: Tracks the parent sub-project ID context behind the scenes so the controller can bind it -->
+	<input type="hidden" th:field="*{subProjectId}" />
+
+	<div>
+		<label for="name">Task Name:</label>
+		<input type="text" id="name" th:field="*{name}" required />
+	</div>
+
+	<div>
+		<label for="estimatedHours">Estimated Hours:</label>
+		<!-- step="0.5" allows users to enter decimal values since estimatedHours is a double -->
+		<input type="number" id="estimatedHours" th:field="*{estimatedHours}" step="0.5" min="0" required />
+	</div>
+
+	<div>
+		<label for="deadline">Target Deadline:</label>
+		<input type="date" id="deadline" th:field="*{deadline}" required />
+	</div>
+
+	<div>
+		<label for="description">Task Context / Description:</label>
+		<textarea id="description" th:field="*{description}" rows="4" cols="50"></textarea>
+	</div>
+
+	<div style="margin-top: 15px;">
+		<button type="submit">Save Changes</button>
+		<!-- Dynamically routes back to the specific parent sub-project's task board view -->
+		<button type="button">
+			<a th:href="@{/subprojects/{id}/tasks(id=*{subProjectId})}" style="text-decoration: none; color: red;">Cancel</a>
+		</button>
+	</div>
+</form>
+</body>
+</html>
