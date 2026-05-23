@@ -5,13 +5,14 @@ INSERT INTO project (
     project_name,
     deadline,
     description,
+    is_archived, -- 👈 Added here
     created_at
 ) VALUES
-      (1, 'Acme Ltd', 'Website Redesign', '2026-06-30', 'Redesign and relaunch the company website', '2026-05-04 13:00:00'),
-      (2, 'Nordic Systems', 'Internal CRM Upgrade', '2026-08-15', 'Upgrade the existing CRM platform', '2026-05-04 13:10:00'),
-      (3, 'Global Logistics Inc', 'Mobile Driver App', '2026-11-01', 'Develop a mobile application for logistics tracking', '2026-05-12 09:00:00'),
-      (4, 'Secure FinTech', 'Cloud Infrastructure Migration', '2026-12-20', 'Migrate on-premise servers to a secure cloud environment', '2026-05-12 10:30:00'),
-      (5, 'EcoPower Energy', 'Smart Grid Dashboard', '2027-01-15', 'Real-time monitoring system for renewable energy output', '2026-05-12 11:45:00');
+      (1, 'Acme Ltd', 'Website Redesign', '2026-06-30', 'Redesign and relaunch the company website', FALSE, '2026-05-04 13:00:00'),
+      (2, 'Nordic Systems', 'Internal CRM Upgrade', '2026-08-15', 'Upgrade the existing CRM platform', FALSE, '2026-05-04 13:10:00'),
+      (3, 'Global Logistics Inc', 'Mobile Driver App', '2026-11-01', 'Develop a mobile application for logistics tracking', FALSE, '2026-05-12 09:00:00'),
+      (4, 'Secure FinTech', 'Cloud Infrastructure Migration', '2026-12-20', 'Migrate on-premise servers to a secure cloud environment', TRUE, '2026-05-12 10:30:00'), --  Marked as archived for testing
+      (5, 'EcoPower Energy', 'Smart Grid Dashboard', '2027-01-15', 'Real-time monitoring system for renewable energy output', FALSE, '2026-05-12 11:45:00');
 
 -- Subproject Table
 INSERT INTO subproject (
