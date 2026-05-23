@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -57,6 +57,40 @@ public class SubProjectControllerTest {
         testTask.setName("Core Shell Assembly");
     }
 
+    @Test
+    public void testShowCreateForm_PrepopulatesParentProjectId() throws Exception {
+        int parentId = 5;
+
+        mockMvc.perform(get("/subprojects/create-form")
+                        .param("projectId", String.valueOf(parentId)))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("create/create-subproject"))
+                .andExpect(model().attributeExists("subProject"))
+                // Asserts the instantiated model object inside the model maps the correct ID
+                .andExpect(model().attribute("subProject", hasProperty("projectId", is(parentId))));
+    }
+
+    @Test
+    public void testCreateSubProject_SavesFormFieldsAndRedirects() throws Exception {
+        ArgumentCaptor<SubProject> captor = ArgumentCaptor.forClass(SubProject.class);
+
+        mockMvc.perform(post("/subprojects/create")
+                        .contentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("projectId", "5")
+                        .param("name", "Vibranium Shield Calibration")
+                        .param("deadline", "2026-09-18")
+                        .param("description", "Testing physics defying engine"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/projects/5/subprojects"));
+
+        verify(subProjectService).createSubProject(captor.capture());
+
+        SubProject captured = captor.getValue();
+        assertEquals(5, captured.getProjectId());
+        assertEquals("Vibranium Shield Calibration", captured.getName());
+        assertEquals("2026-09-18", captured.getDeadline().toString());
+        assertEquals("Testing physics defying engine", captured.getDescription());
+    }
     @Test
     public void testGetTasks_ReturnsViewWithTasksAndHours() throws Exception {
         int subProjectId = 10;
@@ -118,5 +152,20 @@ public class SubProjectControllerTest {
         assertEquals("2026-05-22", capturedSubProject.getDeadline().toString());
         assertEquals("New Description", capturedSubProject.getDescription());
         assertEquals("Arc Reactor Propulsion - Optimized", capturedSubProject.getName());
+    }
+
+
+    @Test
+    public void testDeleteSubProject_ExecutesServiceAndRedirectsToParentDashboard() throws Exception {
+        int targetSubId = 10;
+        int parentProjectId = 5;
+
+        mockMvc.perform(post("/subprojects/" + targetSubId + "/delete")
+                        .contentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("projectId", String.valueOf(parentProjectId)))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/projects/5/subprojects"));
+
+        verify(subProjectService).deleteSubProject(targetSubId);
     }
 }

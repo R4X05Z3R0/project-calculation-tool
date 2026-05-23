@@ -11,7 +11,7 @@
 	<p><a th:href="@{/projects/}">← Back to Projects</a></p>
 
 	<h1 th:text="'Subprojects for: ' + ${project.projectName}">Project Name</h1>
-	<button><a th:href="@{#}">+ New Subproject</a></button>
+	<button><a th:href="@{/subprojects/create-form(projectId=${project.projectId})}">+ New Subproject</a></button>
 	<p th:text="${project.description}">Project Description</p>
 	<p th:text="'Approximately ' + ${totalHours} + ' hours'">Total Hours</p>
 </div>
@@ -45,7 +45,16 @@
 			<td th:text="${#lists.size(sub.tasks)}">0</td>
 			<td>
 				<a th:href="@{/subprojects/{subProjectId}/edit-form(subProjectId = ${sub.subProjectId})}">Edit</a>
-				<a href="#">Delete</a>
+
+				<form th:action="@{/subprojects/{id}/delete(id=${sub.subProjectId})}" method="post" style="display:inline; margin-left: 5px;">
+					<!-- We supply the active parent project ID so the controller can return here -->
+					<input type="hidden" name="projectId" th:value="${project.projectId}" />
+					<button type="submit"
+					        style="background:none; border:none; color:red; text-decoration:none; cursor:pointer; padding:0; font-family:inherit; font-size:inherit;"
+					        th:attr="onclick='return confirm(\'Are you sure you want to delete ' + ${sub.name} + '?\');'">
+						Delete
+					</button>
+				</form>
 			</td>
 		</tr>
 		</tbody>

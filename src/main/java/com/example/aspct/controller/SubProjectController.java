@@ -28,10 +28,14 @@ public class SubProjectController {
         this.taskService = taskService;
     }
 
-    // GET /subprojects/{id} — single sub-project (US-3)
-    @GetMapping("/{subProjectId}")
-    public SubProject getSubProject(@PathVariable int subProjectId) {
-        return subProjectService.getSubProject(subProjectId);
+    // GET /subprojects/create-form - Shows create form for subproject
+    @GetMapping("/create-form")
+    public String getSubProject(@RequestParam int projectId, Model model) {
+        SubProject newSubproject = new SubProject();
+        newSubproject.setProjectId(projectId);
+
+        model.addAttribute("subProject", newSubproject);
+        return "create/create-subproject";
     }
 
     // GET /api/subprojects/{id}/total-hours — sub-project total (US-10)
@@ -61,10 +65,13 @@ public class SubProjectController {
         return "edit/edit-subprojects";
     }
 
-    // POST /api/subprojects — create a sub-project under a project (US-6)
-    @PostMapping
-    public SubProject createSubProject(@RequestBody SubProject subProject) {
-        return subProjectService.createSubProject(subProject);
+    // POST /subprojects/create — create a sub-project under a project (US-6)
+    @PostMapping("/create")
+    public String createSubProject(@ModelAttribute SubProject subProject) {
+        subProjectService.createSubProject(subProject);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/projects/" + subProject.getProjectId() +"/subprojects";
     }
 
     // POST /subprojects/{id}/update — update a sub-project (US-7)
@@ -77,9 +84,12 @@ public class SubProjectController {
         return "redirect:/projects/" + subProject.getProjectId() + "/subprojects";
     }
 
-    // DELETE /api/subprojects/{id} — delete a sub-project and cascade tasks (US-7)
+    // DELETE /subprojects/{id}/delete — delete a sub-project and cascade tasks (US-7)
     @PostMapping("/{subProjectId}/delete")
-    public void deleteSubProject(@PathVariable int subProjectId) {
+    public String deleteSubProject(@PathVariable int subProjectId, @RequestParam int projectId) {
         subProjectService.deleteSubProject(subProjectId);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/projects/" + projectId + "/subprojects";
     }
 }
