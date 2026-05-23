@@ -102,15 +102,15 @@ public class TaskControllerTest {
                         .param("subProjectId", "45")
                         .param("name", "Calibrate Thermal Shields - Verified"))
                 .andExpect(status().is3xxRedirection())
-                // Matches your exact return string structure (including that trailing space character)
+                // Matches your exact return string structure
                 .andExpect(redirectedUrl("/subprojects/45/tasks"));
 
         // Verify that the service layer received the mapped task values
         verify(taskService).updateTask(captor.capture());
 
         Task capturedTask = captor.getValue();
-        assertEquals(200, capturedTask.getTaskId()); // Bound via URL Path variable
-        assertEquals(45, capturedTask.getSubProjectId()); // Bound via form parameter
+        assertEquals(200, capturedTask.getTaskId());
+        assertEquals(45, capturedTask.getSubProjectId());
         assertEquals("Calibrate Thermal Shields - Verified", capturedTask.getName());
     }
 

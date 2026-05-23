@@ -7,7 +7,6 @@ import com.example.aspct.model.Project;
 import com.example.aspct.model.SubProject;
 import com.example.aspct.model.Task;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import java.sql.Timestamp;
 
 import java.sql.Date;
@@ -42,6 +41,7 @@ public class ASPCTMapperTest {
         ProjectRowMapper mapper = new ProjectRowMapper();
         Project project = mapper.mapRow(rs, 1);
 
+        assert project != null;
         assertEquals(1, project.getProjectId());
         assertEquals("Alpha Solutions", project.getCompanyName());
         assertEquals("Calculation tool", project.getProjectName());
@@ -56,6 +56,7 @@ public class ASPCTMapperTest {
         when(rs.getTimestamp("created_at")).thenReturn(null);
         ProjectRowMapper mapper = new ProjectRowMapper();
         Project project = mapper.mapRow(rs, 1);
+        assert project != null;
         assertNull(project.getCreatedAt());
 
 
@@ -74,6 +75,7 @@ public class ASPCTMapperTest {
         SubProjectRowMapper mapper = new SubProjectRowMapper();
         SubProject subProject = mapper.mapRow(rs, 1);
 
+        assert subProject != null;
         assertEquals(1, subProject.getSubProjectId());
         assertEquals(10, subProject.getProjectId());
         assertEquals("Backend", subProject.getName());
@@ -86,6 +88,7 @@ public class ASPCTMapperTest {
         when(rs.getDate("deadline")).thenReturn(null);
         SubProjectRowMapper mapper = new SubProjectRowMapper();
         SubProject subProject = mapper.mapRow(rs, 1);
+        assert subProject != null;
         assertNull(subProject.getDeadline());
 
     }
@@ -104,6 +107,7 @@ public class ASPCTMapperTest {
         TaskRowMapper mapper = new TaskRowMapper();
         Task task = mapper.mapRow(rs, 1);
 
+        assert task != null;
         assertEquals(1, task.getTaskId());
         assertEquals(5, task.getSubProjectId());
         assertEquals("Database Design", task.getName());
@@ -119,6 +123,7 @@ public class ASPCTMapperTest {
 
         TaskRowMapper mapper = new TaskRowMapper();
         Task task = mapper.mapRow(rs, 1);
+        assert task != null;
         assertNull(task.getDeadline());
 
     }
