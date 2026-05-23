@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ASPCT | Archived Projects</title>
+</head>
+<body>
+
+<div>
+	<div>
+		<h1>Archived Projects</h1>
+		<button><a th:href="@{/projects/}">← Back to Projects</a></button>
+	</div>
+
+	<hr>
+
+	<table>
+		<thead>
+		<tr>
+			<th>Project name</th>
+			<th>Company</th>
+			<th>Description</th>
+			<th>Deadline</th>
+			<th>Created At</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:if="${#lists.isEmpty(archivedProjects)}">
+			<td colspan="5">No Archived Projects Yet</td>
+		</tr>
+
+		<tr th:each="pj: ${archivedProjects}">
+			<td>
+				<span th:text="${pj.projectName}">Project Name</span>
+			</td>
+			<td th:text="${pj.companyName}">Company</td>
+			<td th:text="${pj.description}">Description</td>
+			<td th:text="${#temporals.format(pj.deadline, 'dd-MM-yyyy')}">Deadline</td>
+			<td th:text="${#temporals.format(pj.createdAt, 'dd-MM-yyyy HH:mm')}">Created</td>
+			<td>
+				<form th:action="@{/archive/project/{projectId}/restore(projectId=${pj.projectId})}" method="POST" style="display:inline;">
+					<button type="submit" style="background:none; border:none; color:blue; cursor:pointer; text-decoration:underline; padding:0; font-family:inherit; font-size:inherit;">
+						Restore
+					</button>
+				</form>
+
+				|
+
+				<form th:action="@{/archive/project/{projectId}/delete(projectId=${pj.projectId})}" method="POST" style="display:inline;"
+				      onsubmit="return confirm('Are you sure you want to permanently delete this project? This process cannot be undone.');">
+					<button type="submit" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0; font-family:inherit; font-size:inherit;">
+						Delete Forever
+					</button>
+				</form>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

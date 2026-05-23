@@ -26,7 +26,7 @@ public class ProjectRepository {
 
     public List<Project> findAllActive(){
         String sql = """
-                SELECT project_id, company_name, project_name, deadline, description, created_at
+                SELECT project_id, company_name, project_name, deadline, description, created_at, is_archived
                 FROM project
                 WHERE is_archived = FALSE
                 ORDER BY created_at DESC
@@ -37,7 +37,7 @@ public class ProjectRepository {
 
     public List<Project> findAllArchived(){
         String sql = """
-                SELECT project_id, company_name, project_name, deadline, description, created_at
+                SELECT project_id, company_name, project_name, deadline, description, created_at, is_archived
                 FROM project
                 WHERE is_archived = TRUE
                 ORDER BY created_at DESC
@@ -48,7 +48,7 @@ public class ProjectRepository {
 
     public List<Project> findAll() {
         String sql = """
-                SELECT project_id, company_name, project_name, deadline, description, created_at
+                SELECT project_id, company_name, project_name, deadline, description, created_at, is_archived
                 FROM project
                 ORDER BY created_at DESC
                 """;

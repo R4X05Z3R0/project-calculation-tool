@@ -49,7 +49,7 @@ public class TaskController {
         return "edit/edit-task";
     }
 
-    // POST /tasks/{id} — update a task (US-9)
+    // POST /tasks/{id} — update a task
     @PostMapping("/{taskId}/update")
     public String updateTask(@PathVariable int taskId, @ModelAttribute Task task) {
         task.setTaskId(taskId);
@@ -59,7 +59,7 @@ public class TaskController {
         return "redirect:/subprojects/" + task.getSubProjectId() + "/tasks";
     }
 
-    // Post /tasks/{id}/delete — delete a task (US-9)
+    // Post /tasks/{id}/delete — delete a task
     @PostMapping ("/{taskId}/delete")
     public String deleteTask(@PathVariable int taskId, @RequestParam int subProjectId) {
         taskService.deleteTask(taskId);
