@@ -38,13 +38,13 @@ public class SubProjectController {
         return "create/create-subproject";
     }
 
-    // GET /api/subprojects/{id}/total-hours — sub-project total (US-10)
+    // GET /subprojects/{id}/total-hours — sub-project total (US-10)
     @GetMapping("/{subProjectId}/total-hours")
     public double getTotalHours(@PathVariable int subProjectId) {
         return taskService.getTotalHoursForSubProject(subProjectId);
     }
 
-    // GET /api/subprojects/{id}/tasks — all tasks for a sub-project
+    // GET /subprojects/{id}/tasks — all tasks for a sub-project
     @GetMapping("/{subProjectId}/tasks")
     public String getTasks(@PathVariable int subProjectId, Model model) {
         SubProject subProject = subProjectService.getSubProject(subProjectId);
