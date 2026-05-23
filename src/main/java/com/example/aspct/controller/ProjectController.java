@@ -40,11 +40,12 @@ public class ProjectController {
         return "views/view-projects";
     }
 
-    //TODO: I can't remember what this is for but we will figure it out
-    // GET projects/{id} — view a single project with its total hours (US-3, US-11)
-    @GetMapping("/{projectId}")
-    public Project viewProject(@PathVariable int projectId) {
-        return projectService.getProject(projectId);
+
+    // GET projects/create — view a single project with its total hours (US-3, US-11)
+    @GetMapping("/create-form")
+    public String createProject(Model model) {
+        model.addAttribute("project", new Project());
+        return "create/create-project" ;
     }
 
     // GET /projects/{id}/total-hours — project total (US-11)
@@ -76,8 +77,10 @@ public class ProjectController {
 
     // POST /projects/create — create a project (US-1)
     @PostMapping("/create")
-    public Project createProject(@RequestBody Project project) {
-        return projectService.createProject(project);
+    public String createProject(@ModelAttribute Project project) {
+        projectService.createProject(project);
+
+        return "redirect:/projects/";
     }
 
     // POST projects/{id}/update — update a project (US-4)
