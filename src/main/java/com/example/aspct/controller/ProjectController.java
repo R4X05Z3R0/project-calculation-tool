@@ -11,11 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// REST FOUNDATION — test all endpoints with Postman before adding HTML views.
-// To evolve to MVC: replace @RestController with @Controller,
-// inject Model, return view name strings instead of objects,
-// and replace @RequestBody with @ModelAttribute.
-
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
@@ -94,7 +89,7 @@ public class ProjectController {
         return "redirect:/projects/";
     }
 
-    // DELETE /api/projects/{id}/delete — delete a project and cascade (US-5)
+    // DELETE /projects/{id}/delete — delete a project and cascade (US-5)
     @PostMapping("/{projectId}/delete")
     public void deleteProject(@PathVariable int projectId) {
         projectService.deleteProject(projectId);
