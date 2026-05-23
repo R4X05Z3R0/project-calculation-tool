@@ -48,9 +48,9 @@
 
 				|
 
-				<form th:action="@{/archive/project/{projectId}/delete(projectId=${pj.projectId})}" method="POST" style="display:inline;"
-				      onsubmit="return confirm('Are you sure you want to permanently delete this project? This process cannot be undone.');">
-					<button type="submit" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0; font-family:inherit; font-size:inherit;">
+				<form th:action="@{/archive/project/{projectId}/delete(projectId=${pj.projectId})}" method="POST" style="display:inline;">
+					<button type="submit" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0; font-family:inherit; font-size:inherit;"
+					        th:data-name="${pj.projectName}" onclick="return confirm('Are you sure you want to permanently delete ' + this.getAttribute('data-name') + '? This process cannot be undone.')">
 						Delete Forever
 					</button>
 				</form>
