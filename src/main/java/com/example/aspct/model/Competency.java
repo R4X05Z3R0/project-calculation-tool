@@ -1,8 +1,9 @@
 package com.example.aspct.model;
 
 // Repræsentant for et " Kompetencekrav" - dette kan være en UX/UI, database, eller andet område der kræver
-//specielle arbejdsegenskaber der skal bruges til et specifikt projekt.  Dette er selve listen af forskellige
-// typer kompetencerne. Hver Employee vil have en
+//specielle arbejdsegenskaber der skal bruges til et specifikt projekt.  Dette er modellen for alle  forskellige
+// typer kompetencer.  Dette er selve kompetencen.  Hver Employee vil have en kompetence i Phase1.2 og dette vil erstatte " dailyCapacityHours".
+
 
 public class Competency {
 

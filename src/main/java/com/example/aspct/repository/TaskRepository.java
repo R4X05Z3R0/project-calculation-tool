@@ -45,18 +45,19 @@ public class TaskRepository {
     public Task save(Task task) {
         String sql = """
                 INSERT INTO task (subproject_id, competency_id, name, estimated_hours, deadline, description)
-                VALUES (?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """;
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, task.getSubProjectId());
-            ps.setString(2, task.getName());
-            ps.setDouble(3, task.getEstimatedHours());
-            ps.setDate(4, task.getDeadline() != null ? Date.valueOf(task.getDeadline()) : null);
-            ps.setString(5, task.getDescription());
-            ps.setInt();
+            ps.setInt(2, task.getCompetencyId());
+            ps.setString(3, task.getName());
+            ps.setDouble(4, task.getEstimatedHours());
+            ps.setDate(5, task.getDeadline() != null ? Date.valueOf(task.getDeadline()) : null);
+            ps.setString(6, task.getDescription());
+
             return ps;
         }, keyHolder);
 
@@ -70,7 +71,7 @@ public class TaskRepository {
     public void update(Task task) {
         String sql = """
                 UPDATE task
-                SET name = ?, estimated_hours = ?, deadline = ?, description = ?
+                SET name = ?, estimated_hours = ?, deadline = ?, description = ?, competency_id = ?
                 WHERE task_id = ?
                 """;
         jdbcTemplate.update(sql,
@@ -78,7 +79,8 @@ public class TaskRepository {
                 task.getEstimatedHours(),
                 task.getDeadline() != null ? Date.valueOf(task.getDeadline()) : null,
                 task.getDescription(),
-                task.getTaskId());
+                task.getCompetencyId(),
+                task.getTaskId() );
     }
 
     public void deleteById(int taskId) {

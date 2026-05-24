@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 // Service Task - Arbejdsopgaver CRUD.
-// Indeholder getTotalHoursForSubProject, der udregner antallet 
+// Indeholder getTotalHoursForSubProject, der udregner det samlede antal af timer der er på alle Tasks på et givent Sub-projekt.
 
 @Service
 public class TaskService {

@@ -58,10 +58,10 @@ CREATE TABLE task (
 );
 
 Create TABLE employee (
-                          Employee_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          employee_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                           name VARCHAR(55) NOT NULL,
                           competency_id BIGINT NOT NULL,
-                          weeklyHours DECIMAL(5,2) NOT NULL;
+                          daily_hours DECIMAL(5,2) NOT NULL,
 
 CONSTRAINT fk_employee_competency
         FOREIGN KEY (competency_id)

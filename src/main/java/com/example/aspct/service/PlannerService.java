@@ -1,116 +1,120 @@
 package com.example.aspct.service;
 
-import com.example.aspct.model.CompetencyWorkload;
-import com.example.aspct.model.Project;
 import com.example.aspct.model.Planner;
-import com.example.aspct.repository.PlannerRepository;
+import com.example.aspct.model.Project;
 import com.example.aspct.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class PlannerService {
 
-    private final PlannerRepository plannerRepository;
     private final ProjectRepository projectRepository;
+    private final SubProjectService subProjectService;
+    private final EmployeeService employeeService;
 
-    public PlannerService(PlannerRepository plannerRepository,
-                           ProjectRepository projectRepository) {
-        this.plannerRepository = plannerRepository;
+    public PlannerService(ProjectRepository projectRepository,
+                          SubProjectService subProjectService,
+                          EmployeeService employeeService) {
         this.projectRepository = projectRepository;
+        this.subProjectService = subProjectService;
+        this.employeeService = employeeService;
     }
 
     public Planner generatePlan(int projectId) {
         Project project = projectRepository.findById(projectId);
-        List<CompetencyWorkload> breakdowns =
-                plannerRepository.findHoursPerCompetencyByProject(projectId);
-        double unassignedHours =
-                plannerRepository.findUnassignedHoursByProject(projectId);
 
-        String bottleneck = "None";
-        int maxWorkDays = 0;
+        double workloadHours =
+                subProjectService.getTotalHoursForProject(projectId);
 
-        for (CompetencyWorkload breakdown : breakdowns) {
-            int workDays = calculateWorkDays(
-                    breakdown.getTotalEstimatedHours(),
-                    breakdown.getDailyCapacityHours());
-            breakdown.setWorkDaysNeeded(workDays);
+        double workforceDailyHours =
+                employeeService.getTotalDailyHours();
 
-            if (workDays > maxWorkDays) {
-                maxWorkDays = workDays;
-                bottleneck = breakdown.getCompetencyName();
-            }
+        int workDaysNeeded =
+                calculateWorkDays(workloadHours, workforceDailyHours);
+
+        LocalDate expectedFinishDate = null;
+
+        if (workDaysNeeded > 0) {
+            expectedFinishDate = addWorkDays(LocalDate.now(), workDaysNeeded);
         }
 
-        // Bruger Localdate til at identificere Weekendsdage og fjerner dem fra dags-regningen
-        LocalDate startDate = LocalDate.now();
-        LocalDate expectedFinish = addWorkDays(startDate, maxWorkDays);
+        boolean onTrack = false;
+        int daysOverDeadline = 0;
 
-        // Sammenligner med deadlines
-        boolean onTrack = true;
-        int daysOver = 0;
+        if (project.getDeadline() != null && expectedFinishDate != null) {
+            onTrack = !expectedFinishDate.isAfter(project.getDeadline());
 
-        if (project.getDeadline() != null) {
-            onTrack = !expectedFinish.isAfter(project.getDeadline());
             if (!onTrack) {
-                daysOver = countWorkDaysBetween(project.getDeadline(), expectedFinish);
+                daysOverDeadline = countWorkDaysBetween(
+                        project.getDeadline(),
+                        expectedFinishDate
+                );
             }
         }
 
-        Planner plan = new Planner();
-        plan.setProjectId(projectId);
-        plan.setDeadline(project.getDeadline());
-        plan.setworkload(breakdowns);
-        plan.setUnassignedHours(unassignedHours);
-        plan.setBottleneckCompetency(bottleneck);
-        plan.setMaxWorkDays(maxWorkDays);
-        plan.setExpectedFinishDate(expectedFinish);
-        plan.setOnTrack(onTrack);
-        plan.setDaysOverDeadline(daysOver);
+        Planner planner = new Planner();
 
-        return plan;
+        planner.setProjectId(projectId);
+        planner.setDeadline(project.getDeadline());
+        planner.setWorkloadHours(workloadHours);
+        planner.setWorkforceDailyHours(workforceDailyHours);
+        planner.setWorkDaysNeeded(workDaysNeeded);
+        planner.setExpectedFinishDate(expectedFinishDate);
+        planner.setOnTrack(onTrack);
+        planner.setDaysOverDeadline(daysOverDeadline);
+
+        return planner;
     }
 
-    // Divide total hours by daily capacity, round up (a partial day is still a full day)
-    private int calculateWorkDays(double totalHours, double dailyCapacity) {
-        if (dailyCapacity <= 0) {
+    private int calculateWorkDays(double workloadHours, double workforceDailyHours) {
+        if (workloadHours <= 0) {
             return 0;
         }
-        return (int) Math.ceil(totalHours / dailyCapacity);
+
+        if (workforceDailyHours <= 0) {
+            return -1;
+        }
+
+        return (int) Math.ceil(workloadHours / workforceDailyHours);
     }
 
-    // Add N work days to a start date, skipping weekends
-    private LocalDate addWorkDays(LocalDate start, int workDays) {
-        LocalDate date = start;
-        int added = 0;
-        while (added < workDays) {
+    private LocalDate addWorkDays(LocalDate startDate, int workDays) {
+        LocalDate date = startDate;
+        int addedDays = 0;
+
+        while (addedDays < workDays) {
             date = date.plusDays(1);
+
             if (isWorkDay(date)) {
-                added++;
+                addedDays++;
             }
         }
+
         return date;
     }
 
-    // Count work days between two dates (exclusive of start, inclusive of end)
     private int countWorkDaysBetween(LocalDate from, LocalDate to) {
         int count = 0;
         LocalDate date = from;
+
         while (date.isBefore(to)) {
             date = date.plusDays(1);
+
             if (isWorkDay(date)) {
                 count++;
             }
         }
+
         return count;
     }
 
     private boolean isWorkDay(LocalDate date) {
         DayOfWeek day = date.getDayOfWeek();
-        return day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY;
+
+        return day != DayOfWeek.SATURDAY
+                && day != DayOfWeek.SUNDAY;
     }
 }

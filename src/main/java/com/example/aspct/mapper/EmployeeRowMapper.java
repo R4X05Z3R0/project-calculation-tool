@@ -7,18 +7,17 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EmployeeRowMapper implements RowMapper<Employee
-        > {
+public class EmployeeRowMapper implements RowMapper<Employee> {
 
     @Override
     public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Employee Employee = new Employee();
+        Employee employee = new Employee();
 
-        Employee.setEmployeeId(rs.getInt("employee_id"));
-        Employee.setName(rs.getString("name"));
-        Employee.setCompetencyId(rs.getInt("competency_id"));
-        Employee.setWeeklyHours(rs.getDouble("weekly_hours"));
+        employee.setEmployeeId(rs.getInt("employee_id"));
+        employee.setName(rs.getString("name"));
+        employee.setCompetencyId(rs.getInt("competency_id"));
+        employee.setDailyHours(rs.getDouble("weekly_hours"));
 
-        return Employee;
+        return employee;
     }
 }
