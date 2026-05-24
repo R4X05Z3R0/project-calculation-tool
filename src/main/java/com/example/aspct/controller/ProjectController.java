@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// REST FOUNDATION — test all endpoints with Postman before adding HTML views.
-// To evolve to MVC: replace @RestController with @Controller,
-// inject Model, return view name strings instead of objects,
-// and replace @RequestBody with @ModelAttribute.
+
 
 @Controller
 @RequestMapping("/projects")

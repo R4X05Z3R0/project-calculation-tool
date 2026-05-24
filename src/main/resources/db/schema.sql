@@ -5,6 +5,8 @@ DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS subproject;
 DROP TABLE IF EXISTS competency;
 DROP TABLE IF EXISTS project;
+DROP TABLE IF EXISTS employee;
+
 
 CREATE TABLE project (
     project_id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -53,4 +55,16 @@ CREATE TABLE task (
         FOREIGN KEY (competency_id)
         REFERENCES competency(competency_id)
         ON DELETE SET NULL
+);
+
+Create TABLE employee (
+                          Employee_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          name VARCHAR(55) NOT NULL,
+                          competency_id BIGINT NOT NULL,
+                          weeklyHours DECIMAL(5,2) NOT NULL;
+
+CONSTRAINT fk_employee_competency
+        FOREIGN KEY (competency_id)
+        REFERENCES competency(competency_id)
+
 );

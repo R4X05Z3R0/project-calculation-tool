@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// 2. byggeblok i tidsestimeringen. Kompetence/arbejdsområder med Tid (Tasks).
+// Et underområde af Arbejdsfordelingen til projektet. Dette bærer "kompetencen"
 public class SubProject {
 
     private int subProjectId;
@@ -26,7 +28,7 @@ public class SubProject {
 
     public SubProject() {}
 
-    // Getters
+
     public int getSubProjectId() { return subProjectId; }
     public int getProjectId() { return projectId; }
     public String getName() { return name; }
@@ -34,7 +36,7 @@ public class SubProject {
     public String getDescription() { return description; }
     public List<Task> getTasks() { return tasks; }
 
-    // Setters
+
     public void setSubProjectId(int subProjectId) { this.subProjectId = subProjectId; }
     public void setProjectId(int projectId) { this.projectId = projectId; }
     public void setName(String name) { this.name = name; }

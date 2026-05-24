@@ -5,6 +5,7 @@ import com.example.aspct.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+//  Service - Gemmer Projekter og deres Sub-projekter i Databasen.
 
 @Service
 public class ProjectService {
@@ -17,24 +18,24 @@ public class ProjectService {
         this.subProjectService = subProjectService;
     }
 
-    // GET all projects — lists empty here; totals calculated via SubProjectService
+
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
 
-    // GET single project with full tree: project → subProjects → tasks (US-3)
+
     public Project getProject(int projectId) {
         Project project = projectRepository.findById(projectId);
         project.setSubProjects(subProjectService.getSubProjectsWithTasks(projectId));
         return project;
     }
 
-    // CREATE
+
     public Project createProject(Project project) {
         return projectRepository.save(project);
     }
 
-    // UPDATE
+
     public void updateProject(Project project) {
         projectRepository.update(project);
     }

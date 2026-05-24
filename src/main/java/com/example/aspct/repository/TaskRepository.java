@@ -25,7 +25,7 @@ public class TaskRepository {
 
     public List<Task> findBySubProjectId(int subProjectId) {
         String sql = """
-                SELECT task_id, subproject_id, name, estimated_hours, deadline, description
+                SELECT task_id, subproject_id, competency_id, name, estimated_hours, deadline, description
                 FROM task
                 WHERE subproject_id = ?
                 ORDER BY task_id
@@ -35,7 +35,7 @@ public class TaskRepository {
 
     public Task findById(int taskId) {
         String sql = """
-                SELECT task_id, subproject_id, name, estimated_hours, deadline, description
+                SELECT task_id, subproject_id, competency_id, name, estimated_hours, deadline, description
                 FROM task
                 WHERE task_id = ?
                 """;
@@ -44,7 +44,7 @@ public class TaskRepository {
 
     public Task save(Task task) {
         String sql = """
-                INSERT INTO task (subproject_id, name, estimated_hours, deadline, description)
+                INSERT INTO task (subproject_id, competency_id, name, estimated_hours, deadline, description)
                 VALUES (?, ?, ?, ?, ?)
                 """;
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -56,6 +56,7 @@ public class TaskRepository {
             ps.setDouble(3, task.getEstimatedHours());
             ps.setDate(4, task.getDeadline() != null ? Date.valueOf(task.getDeadline()) : null);
             ps.setString(5, task.getDescription());
+            ps.setInt();
             return ps;
         }, keyHolder);
 

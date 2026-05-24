@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+// Selve "arbejdsprojektet" Alpha Solutions modtager og skal organisere.
     public class Project {
 
         private int projectId;
@@ -39,7 +40,6 @@ import java.util.List;
         public Project() {}
 
 
-        // Getters
         public int getProjectId() { return projectId; }
         public String getCompanyName() { return companyName; }
         public String getProjectName() { return projectName; }
@@ -48,7 +48,7 @@ import java.util.List;
         public LocalDateTime getCreatedAt() { return createdAt; }
         public List<SubProject> getSubProjects() { return subProjects; }
 
-        // Setters
+
         public void setProjectId(int projectId) { this.projectId = projectId; }
         public void setCompanyName(String companyName) { this.companyName = companyName; }
         public void setProjectName(String projectName) { this.projectName = projectName; }

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Service Task - Arbejdsopgaver CRUD.
+// Indeholder getTotalHoursForSubProject, der udregner antallet 
+
 @Service
 public class TaskService {
 
@@ -41,7 +44,6 @@ public class TaskService {
     }
 
     // CALCULATE total estimated hours for a sub-project (US-10)
-    // Responsibility belongs here, not in the SubProject model
     public double getTotalHoursForSubProject(int subProjectId) {
         List<Task> tasks = taskRepository.findBySubProjectId(subProjectId);
         double total = 0;

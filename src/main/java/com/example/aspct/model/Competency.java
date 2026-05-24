@@ -1,37 +1,33 @@
 package com.example.aspct.model;
 
+// Repræsentant for et " Kompetencekrav" - dette kan være en UX/UI, database, eller andet område der kræver
+//specielle arbejdsegenskaber der skal bruges til et specifikt projekt.  Dette er selve listen af forskellige
+// typer kompetencerne. Hver Employee vil have en
 
 public class Competency {
 
     private int competencyId;
-    private String competencyName;
+    private String name;
     private double dailyCapacityHours;
-    private double totalEstimatedHours;
-    private int workDaysNeeded;
+    private String description;
 
-    public Competency(int competencyId, String competencyName,
-                               double dailyCapacityHours, double totalEstimatedHours,
-                               int workDaysNeeded) {
+    public Competency(int competencyId, String name,
+                      double dailyCapacityHours, String description) {
         this.competencyId = competencyId;
-        this.competencyName = competencyName;
+        this.name = name;
         this.dailyCapacityHours = dailyCapacityHours;
-        this.totalEstimatedHours = totalEstimatedHours;
-        this.workDaysNeeded = workDaysNeeded;
+        this.description = description;
     }
 
     public Competency() {}
 
-    // Getters
     public int getCompetencyId() { return competencyId; }
-    public String getCompetencyName() { return competencyName; }
+    public String getName() { return name; }
     public double getDailyCapacityHours() { return dailyCapacityHours; }
-    public double getTotalEstimatedHours() { return totalEstimatedHours; }
-    public int getWorkDaysNeeded() { return workDaysNeeded; }
+    public String getDescription() { return description; }
 
-    // Setters
     public void setCompetencyId(int competencyId) { this.competencyId = competencyId; }
-    public void setCompetencyName(String competencyName) { this.competencyName = competencyName; }
+    public void setName(String name) { this.name = name; }
     public void setDailyCapacityHours(double dailyCapacityHours) { this.dailyCapacityHours = dailyCapacityHours; }
-    public void setTotalEstimatedHours(double totalEstimatedHours) { this.totalEstimatedHours = totalEstimatedHours; }
-    public void setWorkDaysNeeded(int workDaysNeeded) { this.workDaysNeeded = workDaysNeeded; }
+    public void setDescription(String description) { this.description = description; }
 }

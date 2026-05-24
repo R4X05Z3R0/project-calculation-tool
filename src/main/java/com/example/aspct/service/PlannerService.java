@@ -1,16 +1,18 @@
 package com.example.aspct.service;
 
-import com.example.aspct.model.Competency;
+import com.example.aspct.model.CompetencyWorkload;
 import com.example.aspct.model.Project;
 import com.example.aspct.model.Planner;
 import com.example.aspct.repository.PlannerRepository;
 import com.example.aspct.repository.ProjectRepository;
+import org.springframework.stereotype.Service;
 
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class PlannerService {
 
     private final PlannerRepository plannerRepository;
@@ -24,7 +26,7 @@ public class PlannerService {
 
     public Planner generatePlan(int projectId) {
         Project project = projectRepository.findById(projectId);
-        List<Competency> breakdowns =
+        List<CompetencyWorkload> breakdowns =
                 plannerRepository.findHoursPerCompetencyByProject(projectId);
         double unassignedHours =
                 plannerRepository.findUnassignedHoursByProject(projectId);
@@ -32,7 +34,7 @@ public class PlannerService {
         String bottleneck = "None";
         int maxWorkDays = 0;
 
-        for (Competency breakdown : breakdowns) {
+        for (CompetencyWorkload breakdown : breakdowns) {
             int workDays = calculateWorkDays(
                     breakdown.getTotalEstimatedHours(),
                     breakdown.getDailyCapacityHours());
@@ -44,11 +46,11 @@ public class PlannerService {
             }
         }
 
-        // Project the finish date from today, skipping weekends
+        // Bruger Localdate til at identificere Weekendsdage og fjerner dem fra dags-regningen
         LocalDate startDate = LocalDate.now();
         LocalDate expectedFinish = addWorkDays(startDate, maxWorkDays);
 
-        // Compare against deadline
+        // Sammenligner med deadlines
         boolean onTrack = true;
         int daysOver = 0;
 
@@ -62,7 +64,7 @@ public class PlannerService {
         Planner plan = new Planner();
         plan.setProjectId(projectId);
         plan.setDeadline(project.getDeadline());
-        plan.setBreakdowns(breakdowns);
+        plan.setworkload(breakdowns);
         plan.setUnassignedHours(unassignedHours);
         plan.setBottleneckCompetency(bottleneck);
         plan.setMaxWorkDays(maxWorkDays);
