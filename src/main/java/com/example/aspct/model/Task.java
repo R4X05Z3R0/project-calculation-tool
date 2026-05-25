@@ -13,11 +13,11 @@ public class Task {
     private double estimatedHours;
     private LocalDate deadline;
     private String description;
-    private int competencyId;
+    private Integer competencyId;
 
     // Constructors
     public Task(int taskId, int subProjectId, String name,
-                double estimatedHours, LocalDate deadline, String description, int competencyId) {
+                double estimatedHours, LocalDate deadline, String description, Integer competencyId) {
         this.taskId = taskId;
         this.subProjectId = subProjectId;
         this.name = name;
@@ -29,7 +29,7 @@ public class Task {
 
     public Task() {}
 
-    public int getCompetencyId() { return competencyId; }
+    public Integer getCompetencyId() { return competencyId; }
     public int getTaskId() { return taskId; }
     public int getSubProjectId() { return subProjectId; }
     public String getName() { return name; }
@@ -37,7 +37,7 @@ public class Task {
     public LocalDate getDeadline() { return deadline; }
     public String getDescription() { return description; }
 
-    public void setCompetencyId(int competencyId) { this.competencyId = competencyId; }
+    public void setCompetencyId(Integer competencyId) { this.competencyId = competencyId; }
     public void setTaskId(int taskId) { this.taskId = taskId; }
     public void setSubProjectId(int subProjectId) { this.subProjectId = subProjectId; }
     public void setName(String name) { this.name = name; }
