@@ -135,6 +135,7 @@ public class ProjectController {
                                        @RequestParam int employeeId) {
         employeeService.addEmployeeToProject(projectId, employeeId);
 
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
         return "redirect:/projects/" + projectId + "/workforce";
     }
 
@@ -144,6 +145,7 @@ public class ProjectController {
                                             @RequestParam int employeeId) {
         employeeService.removeEmployeeFromProject(projectId, employeeId);
 
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
         return "redirect:/projects/" + projectId + "/workforce";
     }
 }
