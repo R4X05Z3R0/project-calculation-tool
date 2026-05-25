@@ -83,4 +83,5 @@ public class ProjectRepository {
         String sql = "DELETE FROM project WHERE project_id = ?";
         jdbcTemplate.update(sql, projectId);
     }
+
 }

@@ -71,7 +71,7 @@ public class PlannerService {
 
         return planner;
     }
-    //Tjekker - "er denne dag en  Arbejdsdag ? "
+    //Tjekker - "er denne dag en Arbejdsdag ? "
     private boolean isWorkDay(LocalDate date) {
         DayOfWeek day = date.getDayOfWeek();
 
