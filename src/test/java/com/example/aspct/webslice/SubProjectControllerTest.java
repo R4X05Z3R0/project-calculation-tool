@@ -147,7 +147,7 @@ public class SubProjectControllerTest {
         verify(subProjectService).updateSubProject(captor.capture());
 
         SubProject capturedSubProject = captor.getValue();
-        assertEquals(10, capturedSubProject.getSubProjectId()); // Bound via URL Path variable
+        assertEquals(10, capturedSubProject.getSubProjectId());
         assertEquals(5, capturedSubProject.getProjectId());
         assertEquals("2026-05-22", capturedSubProject.getDeadline().toString());
         assertEquals("New Description", capturedSubProject.getDescription());

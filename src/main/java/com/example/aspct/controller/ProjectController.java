@@ -27,29 +27,39 @@ public class ProjectController {
         this.taskService = taskService;
     }
 
-    // GET /projects/ — list all projects (US-2)
+    //I am adding the comments so I don't get confused... It isn't AI. Just saying.
+
+//    // GET /projects/ — list all projects
+//    @GetMapping("/")
+//    public String listProjects(Model model) {
+//        List<Project> projects = projectService.getAllProjects();
+//        model.addAttribute("projects", projects);
+//        return "views/view-projects";
+//    }
+//
+    // GET /projects/ — list all active projects
     @GetMapping("/")
     public String listProjects(Model model) {
-        List<Project> projects = projectService.getAllProjects();
+        List<Project> projects = projectService.getAllActiveProjects();
         model.addAttribute("projects", projects);
         return "views/view-projects";
     }
 
 
-    // GET projects/create — view a single project with its total hours (US-3, US-11)
+    // GET projects/create — view a single project with its total hours
     @GetMapping("/create-form")
     public String createProject(Model model) {
         model.addAttribute("project", new Project());
         return "create/create-project" ;
     }
 
-    // GET /projects/{id}/total-hours — project total (US-11)
+    // GET /projects/{id}/total-hours — project total
     @GetMapping("/{projectId}/total-hours")
     public double getTotalHours(@PathVariable int projectId) {
         return subProjectService.getTotalHoursForProject(projectId);
     }
 
-    // GET /projects/{id}/subprojects — all sub-projects for a project (US-3)
+    // GET /projects/{id}/subprojects — all sub-projects for a project
     @GetMapping("/{projectId}/subprojects")
     public String getSubProjects(@PathVariable int projectId, Model model) {
         Project project = projectService.getProject(projectId);
@@ -70,7 +80,7 @@ public class ProjectController {
         return "edit/edit-project";
     }
 
-    // POST /projects/create — create a project (US-1)
+    // POST /projects/create — create a project
     @PostMapping("/create")
     public String createProject(@ModelAttribute Project project) {
         projectService.createProject(project);
@@ -78,7 +88,7 @@ public class ProjectController {
         return "redirect:/projects/";
     }
 
-    // POST projects/{id}/update — update a project (US-4)
+    // POST projects/{id}/update — update a project
     @PostMapping("/{projectId}/update")
     public String updateProject(@PathVariable int projectId,
                                 @ModelAttribute Project project) {
@@ -89,7 +99,7 @@ public class ProjectController {
         return "redirect:/projects/";
     }
 
-    // DELETE /projects/{id}/delete — delete a project and cascade (US-5)
+    // DELETE /projects/{id}/delete — delete a project and cascade
     @PostMapping("/{projectId}/delete")
     public void deleteProject(@PathVariable int projectId) {
         projectService.deleteProject(projectId);

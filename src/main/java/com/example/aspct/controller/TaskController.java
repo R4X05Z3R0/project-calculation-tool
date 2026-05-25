@@ -6,11 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-// REST FOUNDATION — test all endpoints with Postman before adding HTML views.
-// To evolve to MVC: replace @RestController with @Controller,
-// inject Model, return view name strings instead of objects,
-// and replace @RequestBody with @ModelAttribute.
-
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
@@ -31,7 +26,7 @@ public class TaskController {
         return "create/create-task";
     }
 
-    // POST /tasks — create a task under a sub-project (US-8)
+    // POST /tasks — create a task under a sub-project
     @PostMapping("/create")
     public String createTask(@ModelAttribute Task task) {
         taskService.createTask(task);
@@ -49,7 +44,7 @@ public class TaskController {
         return "edit/edit-task";
     }
 
-    // POST /tasks/{id} — update a task (US-9)
+    // POST /tasks/{id} — update a task
     @PostMapping("/{taskId}/update")
     public String updateTask(@PathVariable int taskId, @ModelAttribute Task task) {
         task.setTaskId(taskId);
@@ -59,7 +54,7 @@ public class TaskController {
         return "redirect:/subprojects/" + task.getSubProjectId() + "/tasks";
     }
 
-    // Post /tasks/{id}/delete — delete a task (US-9)
+    // Post /tasks/{id}/delete — delete a task
     @PostMapping ("/{taskId}/delete")
     public String deleteTask(@PathVariable int taskId, @RequestParam int subProjectId) {
         taskService.deleteTask(taskId);

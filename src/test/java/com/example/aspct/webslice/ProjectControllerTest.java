@@ -91,7 +91,7 @@ public class ProjectControllerTest{
     public void testViewsListOfProjects() throws Exception{
 
         //Act
-        Mockito.when(projectService.getAllProjects()).thenReturn(testProjectList);
+        Mockito.when(projectService.getAllActiveProjects()).thenReturn(testProjectList);
 
         //Assert
         mockMvc.perform(get("/projects/"))
@@ -99,6 +99,8 @@ public class ProjectControllerTest{
                 .andExpect(view().name("views/view-projects"))
                 .andExpect(model().attributeExists("projects"))
                 .andExpect(model().attribute("projects",hasSize(1)));
+
+        verify(projectService).getAllActiveProjects();
     }
 
     @Test
@@ -111,6 +113,8 @@ public class ProjectControllerTest{
                 .andExpect(view().name("edit/edit-project"))
                 .andExpect(model().attributeExists("project"))
                 .andExpect(model().attribute("project", testProject));
+
+        verify(projectService).getProject(1);
     }
 
     @Test

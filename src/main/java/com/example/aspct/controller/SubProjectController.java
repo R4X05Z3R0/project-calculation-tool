@@ -33,7 +33,7 @@ public class SubProjectController {
         return "create/create-subproject";
     }
 
-    // GET /subprojects/{id}/total-hours — sub-project total (US-10)
+    // GET /subprojects/{id}/total-hours — sub-project total
     @GetMapping("/{subProjectId}/total-hours")
     public double getTotalHours(@PathVariable int subProjectId) {
         return taskService.getTotalHoursForSubProject(subProjectId);
@@ -60,7 +60,7 @@ public class SubProjectController {
         return "edit/edit-subprojects";
     }
 
-    // POST /subprojects/create — create a sub-project under a project (US-6)
+    // POST /subprojects/create — create a sub-project under a project
     @PostMapping("/create")
     public String createSubProject(@ModelAttribute SubProject subProject) {
         subProjectService.createSubProject(subProject);
@@ -69,7 +69,7 @@ public class SubProjectController {
         return "redirect:/projects/" + subProject.getProjectId() +"/subprojects";
     }
 
-    // POST /subprojects/{id}/update — update a sub-project (US-7)
+    // POST /subprojects/{id}/update — update a sub-project
     @PostMapping("/{subProjectId}/update")
     public String updateSubProject(@PathVariable int subProjectId, @ModelAttribute SubProject subProject) {
         subProject.setSubProjectId(subProjectId);
@@ -79,7 +79,7 @@ public class SubProjectController {
         return "redirect:/projects/" + subProject.getProjectId() + "/subprojects";
     }
 
-    // DELETE /subprojects/{id}/delete — delete a sub-project and cascade tasks (US-7)
+    // DELETE /subprojects/{id}/delete — delete a sub-project and cascade tasks
     @PostMapping("/{subProjectId}/delete")
     public String deleteSubProject(@PathVariable int subProjectId, @RequestParam int projectId) {
         subProjectService.deleteSubProject(subProjectId);

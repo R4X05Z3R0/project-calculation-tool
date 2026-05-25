@@ -14,6 +14,7 @@ import java.util.List;
         private String description;
         private LocalDateTime createdAt;
         private List<SubProject> subProjects = new ArrayList<>();
+        private boolean isArchived = false;
 
         // Constructors
 
@@ -47,6 +48,9 @@ import java.util.List;
         public String getDescription() { return description; }
         public LocalDateTime getCreatedAt() { return createdAt; }
         public List<SubProject> getSubProjects() { return subProjects; }
+        public boolean isArchived() {
+            return isArchived;
+        }
 
         // Setters
         public void setProjectId(int projectId) { this.projectId = projectId; }
@@ -56,4 +60,8 @@ import java.util.List;
         public void setDescription(String description) { this.description = description; }
         public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
         public void setSubProjects(List<SubProject> subProjects) { this.subProjects = subProjects; }
-}
+
+        public void setArchived(boolean archived) {
+            this.isArchived = archived;
+        }
+    }
