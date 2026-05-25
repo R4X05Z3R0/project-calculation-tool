@@ -12,6 +12,7 @@
 
 	<h1 th:text="'Subprojects for: ' + ${project.projectName}">Project Name</h1>
 	<button><a th:href="@{/subprojects/create-form(projectId=${project.projectId})}">+ New Subproject</a></button>
+	<button><a th:href="@{/projects/{projectId}/workforce(projectId=${project.projectId})}">View Project Estimates</a></button>
 	<p th:text="${project.description}">Project Description</p>
 	<p th:text="'Approximately ' + ${totalHours} + ' hours'">Total Hours</p>
 </div>
