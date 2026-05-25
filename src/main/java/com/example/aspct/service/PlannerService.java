@@ -30,7 +30,7 @@ public class PlannerService {
                 subProjectService.getTotalHoursForProject(projectId);
 
         double workforceDailyHours =
-                employeeService.getTotalDailyHours();
+                employeeService.getWorkforceDailyHoursForProject(projectId);
 
         int workDaysNeeded =
                 calculateWorkDays(workloadHours, workforceDailyHours);
@@ -68,7 +68,12 @@ public class PlannerService {
 
         return planner;
     }
+    private boolean isWorkDay(LocalDate date) {
+        DayOfWeek day = date.getDayOfWeek();
 
+        return day != DayOfWeek.SATURDAY
+                && day != DayOfWeek.SUNDAY;
+    }
     private int calculateWorkDays(double workloadHours, double workforceDailyHours) {
         if (workloadHours <= 0) {
             return 0;
@@ -96,6 +101,7 @@ public class PlannerService {
         return date;
     }
 
+
     private int countWorkDaysBetween(LocalDate from, LocalDate to) {
         int count = 0;
         LocalDate date = from;
@@ -111,10 +117,5 @@ public class PlannerService {
         return count;
     }
 
-    private boolean isWorkDay(LocalDate date) {
-        DayOfWeek day = date.getDayOfWeek();
 
-        return day != DayOfWeek.SATURDAY
-                && day != DayOfWeek.SUNDAY;
-    }
 }

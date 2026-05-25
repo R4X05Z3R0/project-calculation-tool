@@ -21,12 +21,13 @@ public class SubProjectService {
         this.taskService = taskService;
     }
 
+    // Laver liste af Sub-projekter med samme ProjectID
 
     public List<SubProject> getSubProjectsByProjectId(int projectId) {
         return subProjectRepository.findByProjectId(projectId);
     }
 
-
+// Laver liste af Sub-projekter med samme ProjectID. Kører listen igennem og samler alle tasks med en af disse Sub-projekt ID'er.
     public List<SubProject> getSubProjectsWithTasks(int projectId) {
         List<SubProject> subProjects = subProjectRepository.findByProjectId(projectId);
         for (SubProject subProject : subProjects) {
@@ -51,6 +52,8 @@ public class SubProjectService {
         subProjectRepository.deleteById(subProjectId);
     }
 
+
+    // Samler Sub-projekters estimatedhours fra tasks, og giver et samlet estimatedhours for hele Projektet.
 
     public double getTotalHoursForProject(int projectId) {
         List<SubProject> subProjects = subProjectRepository.findByProjectId(projectId);

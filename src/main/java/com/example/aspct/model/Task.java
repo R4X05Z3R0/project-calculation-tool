@@ -4,7 +4,7 @@ import java.time.LocalDate;
 // Vigtigeste "grundsten" i Tidsestimeringen
 // Selve de enkelte arbejdsopgaver som skal laves for at færdiggøre projektet.
 // Indeholder Tiden der bruges til at udregne Arbejdstiden i både SubProjekt og Projekt. - estimatedHours
-// Er bundet til et Subprojekt og ikke direkte til et projekt.  Har en intern deadline pt.
+// Er bundet til et Subprojekt og ikke direkte til et projekt.  Har en intern deadline pt.i forberedelse til senere implementeringer.
 public class Task {
 
     private int taskId;

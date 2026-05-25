@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS aspect;
 USE aspect;
 
+DROP TABLE IF EXISTS project_employee;
 DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS subproject;
 DROP TABLE IF EXISTS competency;
@@ -67,4 +68,21 @@ CONSTRAINT fk_employee_competency
         FOREIGN KEY (competency_id)
         REFERENCES competency(competency_id)
 
+);
+
+CREATE TABLE project_employee (
+                                  project_id BIGINT NOT NULL,
+                                  employee_id BIGINT NOT NULL,
+
+                                  PRIMARY KEY (project_id, employee_id),
+
+                                  CONSTRAINT fk_project_employee_project
+                                      FOREIGN KEY (project_id)
+                                          REFERENCES project(project_id)
+                                          ON DELETE CASCADE,
+
+                                  CONSTRAINT fk_project_employee_employee
+                                      FOREIGN KEY (employee_id)
+                                          REFERENCES employee(employee_id)
+                                          ON DELETE CASCADE
 );

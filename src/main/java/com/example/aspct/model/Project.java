@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-// Selve "arbejdsprojektet" Alpha Solutions modtager og skal organisere.
+// Selve "arbejdsprojektet" Alpha Solutions modtager og skal give et tids og prisestimat på.
     public class Project {
 
         private int projectId;
@@ -16,7 +16,6 @@ import java.util.List;
         private LocalDateTime createdAt;
         private List<SubProject> subProjects = new ArrayList<>();
 
-        // Constructors
 
         public Project(int projectId, String companyName, String projectName,
                        LocalDate deadline, String description, LocalDateTime createdAt) {
@@ -25,8 +24,7 @@ import java.util.List;
             this.projectName = projectName;
             this.deadline = deadline;
             this.description = description;
-            this.createdAt
-                    = createdAt;
+            this.createdAt = createdAt;
         }
 
         public Project(String companyName, String projectName, LocalDate deadline, String description){

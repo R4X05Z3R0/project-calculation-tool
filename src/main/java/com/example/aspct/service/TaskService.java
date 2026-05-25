@@ -18,12 +18,12 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    // GET all tasks for a sub-project
+ //  Alle Tasks i en givent Sub-projekt.
     public List<Task> getTasksBySubProjectId(int subProjectId) {
         return taskRepository.findBySubProjectId(subProjectId);
     }
 
-    // GET single task
+    // En enkelt task
     public Task getTask(int taskId) {
         return taskRepository.findById(taskId);
     }
@@ -43,7 +43,7 @@ public class TaskService {
         taskRepository.deleteById(taskId);
     }
 
-    // CALCULATE total estimated hours for a sub-project (US-10)
+    // Samler EstimatedHours fra Tasks i Subprojektet som samlet værdi.
     public double getTotalHoursForSubProject(int subProjectId) {
         List<Task> tasks = taskRepository.findBySubProjectId(subProjectId);
         double total = 0;

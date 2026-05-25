@@ -16,7 +16,7 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
         employee.setEmployeeId(rs.getInt("employee_id"));
         employee.setName(rs.getString("name"));
         employee.setCompetencyId(rs.getInt("competency_id"));
-        employee.setDailyHours(rs.getDouble("weekly_hours"));
+        employee.setDailyHours(rs.getDouble("daily_hours"));
 
         return employee;
     }

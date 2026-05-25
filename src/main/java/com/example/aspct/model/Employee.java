@@ -17,15 +17,15 @@ public class Employee {
 
     public Employee() {}
 
-    // Getters
+
     public int getEmployeeId() { return employeeId; }
     public String getName() { return name; }
     public int getCompetencyId() { return competencyId; }
     public double getDailyHours() {
         return dailyHours;
     }
-    // Setters
-    public void setEmployeeId(int EmployeeId) { this.employeeId = EmployeeId; }
+
+    public void setEmployeeId(int employeeId) { this.employeeId = employeeId; }
     public void setName(String name) { this.name = name; }
     public void setCompetencyId(int competencyId) { this.competencyId = competencyId; }
     public void setDailyHours(double dailyHours) {

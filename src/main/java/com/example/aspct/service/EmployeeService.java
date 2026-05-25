@@ -19,15 +19,32 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public double getTotalDailyHours() {
-        List<Employee> employees = employeeRepository.findAll();
+    public void addEmployeeToProject(int projectId, int employeeId) {
+        employeeRepository.addEmployeeToProject(projectId, employeeId);
+    }
 
-        double totalDailyHours = 0;
+    public void removeEmployeeFromProject(int projectId, int employeeId) {
+        employeeRepository.removeEmployeeFromProject(projectId, employeeId);
+    }
+
+
+    public List<Employee> getProjectWorkforce(int projectId) {
+        return employeeRepository.findEmployeesByProjectId(projectId);
+    }
+
+    public List<Employee> getAvailableEmployeesForProject(int projectId) {
+        return employeeRepository.findEmployeesNotOnProject(projectId);
+    }
+
+    public double getWorkforceDailyHoursForProject(int projectId) {
+        List<Employee> employees = employeeRepository.findEmployeesByProjectId(projectId);
+
+        double workforceDailyHours = 0;
 
         for (Employee employee : employees) {
-            totalDailyHours += employee.getDailyHours();
+            workforceDailyHours += employee.getDailyHours();
         }
 
-        return totalDailyHours;
+        return workforceDailyHours;
     }
 }

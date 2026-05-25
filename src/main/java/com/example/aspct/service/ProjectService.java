@@ -18,12 +18,12 @@ public class ProjectService {
         this.subProjectService = subProjectService;
     }
 
-
+ // Liste af Alle projekter
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
 
-
+// Kører SubProjekt kommandoen der samler deres enkelte tasks efter at have samlet sub-projekter efter ID.
     public Project getProject(int projectId) {
         Project project = projectRepository.findById(projectId);
         project.setSubProjects(subProjectService.getSubProjectsWithTasks(projectId));
@@ -40,7 +40,7 @@ public class ProjectService {
         projectRepository.update(project);
     }
 
-    // DELETE (sub-projects and tasks cascade via DB)
+
     public void deleteProject(int projectId) {
         projectRepository.deleteById(projectId);
     }
