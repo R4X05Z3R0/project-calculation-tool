@@ -4,9 +4,10 @@ USE aspect;
 DROP TABLE IF EXISTS project_employee;
 DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS subproject;
+DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS competency;
 DROP TABLE IF EXISTS project;
-DROP TABLE IF EXISTS employee;
+
 
 
 CREATE TABLE project (
@@ -65,9 +66,9 @@ Create TABLE employee (
                           competency_id BIGINT NOT NULL,
                           daily_hours DECIMAL(5,2) NOT NULL,
 
-CONSTRAINT fk_employee_competency
-        FOREIGN KEY (competency_id)
-        REFERENCES competency(competency_id)
+                          CONSTRAINT fk_employee_competency
+                              FOREIGN KEY (competency_id)
+                                  REFERENCES competency(competency_id)
 
 );
 
