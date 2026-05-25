@@ -23,16 +23,15 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final SubProjectService subProjectService;
-    private final TaskService taskService;
     private final PlannerService plannerService;
     private final EmployeeService employeeService;
 
     public ProjectController(ProjectService projectService,
                              SubProjectService subProjectService,
-                             TaskService taskService, PlannerService plannerService, EmployeeService employeeService) {
+                             PlannerService plannerService,
+                             EmployeeService employeeService) {
         this.projectService = projectService;
         this.subProjectService = subProjectService;
-        this.taskService = taskService;
         this.plannerService = plannerService;
         this.employeeService = employeeService;
     }
