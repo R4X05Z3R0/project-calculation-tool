@@ -107,8 +107,8 @@ public class ProjectController {
 
 
 
-    // WORKFORCE - her samler vi fremvisningen af alle de matematiske funktioner og behandlinger af data
-    // som der bliver lavet både med Arbejdsstyrke, arbejdsdage
+    // WORKFORCE - her samler vi (sammen med HTML siden) fremvisningen af alle de matematiske funktioner og behandlinger af data
+    // som der bliver lavet både med Arbejdsstyrke og arbejdsdage for et projekt
 
     @GetMapping("/{projectId}/workforce")
     public String viewWorkforce(@PathVariable int projectId, Model model) {
@@ -123,7 +123,7 @@ public class ProjectController {
 
         return "views/view-workforce";
     }
- // Tilføjer en medarbejder til ProjektWorkforce. -> backend
+ // Tilføjer en medarbejder til ProjektWorkforce. -> backend (project_employee)
     @PostMapping("/{projectId}/workforce/add")
     public String addEmployeeToProject(@PathVariable int projectId,
                                        @RequestParam int employeeId) {
@@ -132,7 +132,7 @@ public class ProjectController {
         return "redirect:/projects/" + projectId + "/workforce";
     }
 
-    // fjerner en medarbejder fra Projektets workforce.
+    // fjerner en medarbejder fra Projektets workforce.(project_employee)
     @PostMapping("/{projectId}/workforce/remove")
     public String removeEmployeeFromProject(@PathVariable int projectId,
                                             @RequestParam int employeeId) {

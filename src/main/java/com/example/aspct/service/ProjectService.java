@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 //  Service - Gemmer Projekter og deres Sub-projekter i Databasen.
-
 @Service
 public class ProjectService {
 
@@ -23,24 +22,19 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-// Kører SubProjekt kommandoen der samler deres enkelte tasks efter at have samlet sub-projekter efter ID.
+// Kører SubProjekt kommandoen der samler Subprojektets enkelte tasks efter at have samlet alle subprojekter baseret på ID.("nested")
     public Project getProject(int projectId) {
         Project project = projectRepository.findById(projectId);
         project.setSubProjects(subProjectService.getSubProjectsWithTasks(projectId));
         return project;
     }
 
-
     public Project createProject(Project project) {
         return projectRepository.save(project);
     }
-
-
     public void updateProject(Project project) {
         projectRepository.update(project);
     }
-
-
     public void deleteProject(int projectId) {
         projectRepository.deleteById(projectId);
     }

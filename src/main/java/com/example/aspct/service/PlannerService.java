@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
+// Sætter arbejdstiden fra Projektet i en "reel" tidsrelation ifht.
+// en arbejdsuge med weekenden inkluderet for at bedre estimere "estimated finish date."
+
 @Service
 public class PlannerService {
 
@@ -68,6 +71,7 @@ public class PlannerService {
 
         return planner;
     }
+    //Tjekker - "er denne dag en  Arbejdsdag ? "
     private boolean isWorkDay(LocalDate date) {
         DayOfWeek day = date.getDayOfWeek();
 

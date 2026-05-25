@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 // Database for Medarbejdere. Indeholder også Medarbejder-på-projekt listen i databasen, en "Workforce".
-// Medarbejdere er lige nu hardcodede i databasen og mangler en tilføjelsesfunktion af nye Medarbejdere.
+// TODO Medarbejdere er lige nu hardcodede fra SQL i databasen og vi mangler at implementere en tilføjelses og fjernelses-funktion af nye Medarbejdere.
 @Repository
 public class EmployeeRepository {
 
@@ -75,7 +75,7 @@ public class EmployeeRepository {
 
         return jdbcTemplate.query(sql, employeeRowMapper, projectId);
     }
-// For at undgå at folk er på flere projekter og tæller flere gange, fjerner vi dem i fremvisning til nye projekter.
+// En liste over folk der ikke er tilknyttet projektet. Bruges til at vise hvem der KAN tilføjes til et projekt.
     public List<Employee> findEmployeesNotOnProject(int projectId) {
         String sql = """
             SELECT e.employee_id, e.name, e.competency_id, e.daily_hours
