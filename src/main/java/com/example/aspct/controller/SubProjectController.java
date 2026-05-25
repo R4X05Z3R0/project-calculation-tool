@@ -22,7 +22,7 @@ public class SubProjectController {
         this.taskService = taskService;
     }
 
-
+    // GET /subprojects/create-form - Shows create form for subproject
     @GetMapping("/create-form")
     public String getSubProject(@RequestParam int projectId, Model model) {
         SubProject newSubproject = new SubProject();
@@ -32,13 +32,13 @@ public class SubProjectController {
         return "create/create-subproject";
     }
 
-
+    // GET /subprojects/{id}/total-hours — sub-project total
     @GetMapping("/{subProjectId}/total-hours")
     public double getTotalHours(@PathVariable int subProjectId) {
         return taskService.getTotalHoursForSubProject(subProjectId);
     }
 
-
+    // GET /subprojects/{id}/tasks — all tasks for a sub-project
     @GetMapping("/{subProjectId}/tasks")
     public String getTasks(@PathVariable int subProjectId, Model model) {
         SubProject subProject = subProjectService.getSubProject(subProjectId);
@@ -50,7 +50,7 @@ public class SubProjectController {
         return "views/view-tasks";
     }
 
-
+    //GET /subprojects/id/edit-form - Edit form for subproject
     @GetMapping("/{subProjectId}/edit-form")
     public String editSubProject(@PathVariable int subProjectId, Model model){
         SubProject subProjectToEdit = subProjectService.getSubProject(subProjectId);
@@ -59,7 +59,7 @@ public class SubProjectController {
         return "edit/edit-subprojects";
     }
 
-
+    // POST /subprojects/create — create a sub-project under a project
     @PostMapping("/create")
     public String createSubProject(@ModelAttribute SubProject subProject) {
         subProjectService.createSubProject(subProject);
@@ -68,7 +68,7 @@ public class SubProjectController {
         return "redirect:/projects/" + subProject.getProjectId() +"/subprojects";
     }
 
-
+    // POST /subprojects/{id}/update — update a sub-project
     @PostMapping("/{subProjectId}/update")
     public String updateSubProject(@PathVariable int subProjectId, @ModelAttribute SubProject subProject) {
         subProject.setSubProjectId(subProjectId);
@@ -78,6 +78,7 @@ public class SubProjectController {
         return "redirect:/projects/" + subProject.getProjectId() + "/subprojects";
     }
 
+    // DELETE /subprojects/{id}/delete — delete a sub-project and cascade tasks
     @PostMapping("/{subProjectId}/delete")
     public String deleteSubProject(@PathVariable int subProjectId, @RequestParam int projectId) {
         subProjectService.deleteSubProject(subProjectId);

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ASPCT | Edit Subproject</title>
+</head>
+<body>
+
+<div>
+	<!-- Dynamic link back to the subproject list for this specific parent project -->
+	<p><a th:href="@{/projects/{projectId}/subprojects(projectId=${subProject.projectId})}">← Cancel & Back to Subprojects</a></p>
+	<h1>Edit Subproject</h1>
+</div>
+
+<hr>
+
+<div>
+	<!-- Form action follows your custom path variable parameter assignment design -->
+	<form th:action="@{/subprojects/{subProjectId}/update(subProjectId = ${subProject.subProjectId})}" th:object="${subProject}" method="POST">
+		<!-- Hidden fields preserve internal IDs during the POST request -->
+		<input type="hidden" th:field="*{subProjectId}" />
+		<input type="hidden" th:field="*{projectId}" />
+
+		<div>
+			<label for="name">Subproject Name:</label><br>
+			<input type="text" id="name" th:field="*{name}" required />
+		</div>
+
+		<br>
+
+		<div>
+			<label for="description">Description:</label><br>
+			<textarea id="description" th:field="*{description}" rows="5" cols="40"></textarea>
+		</div>
+
+		<br>
+
+		<div>
+			<label for="deadline">Subproject Deadline:</label>
+			<span style="color: gray; font-size: 0.9em;"
+			      th:text="' (Current: ' + ${#temporals.format(subProject.deadline, 'dd-MM-yyyy')} + ')'">
+          (Current: 22-05-20XX)</span>
+			<br>
+			<input type="date" id="deadline" th:field="*{deadline}" required />
+		</div>
+
+		<br>
+
+		<div>
+			<button type="submit">Save Changes</button>
+			<button type="button"><a th:href="@{/projects/{projectId}/subprojects(projectId=${subProject.projectId})}" style="text-decoration: none; color: red;">Cancel</a></button>
+		</div>
+	</form>
+</div>
+
+</body>
+</html>

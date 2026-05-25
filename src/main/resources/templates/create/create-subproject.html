@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Create Sub-Project</title>
+</head>
+<body>
+<h2>Add a New Sub-Project</h2>
+
+<form th:action="@{/subprojects/create}" th:object="${subProject}" method="post">
+	<!-- CRITICAL: Tracks the parent project ID context behind the scenes so the controller can bind it before psting-->
+	<input type="hidden" th:field="*{projectId}" />
+
+	<div>
+		<label for="name">Sub-Project Name:</label>
+		<input type="text" id="name" th:field="*{name}" required />
+	</div>
+
+	<div>
+		<label for="deadline">Target Deadline:</label>
+		<input type="date" id="deadline" th:field="*{deadline}" required />
+	</div>
+
+	<div>
+		<label for="description">Sub-Project Context / Description:</label>
+		<textarea id="description" th:field="*{description}" rows="4" cols="50"></textarea>
+	</div>
+
+	<div style="margin-top: 15px;">
+		<button type="submit">Save Changes</button>
+		<!-- Dynamically routes back to the specific parent project's subproject board view -->
+		<button type="button"><a th:href="@{/projects/{id}/subprojects(id=*{projectId})}" style="text-decoration: none; color: red;">Cancel</a></button>
+	</div>
+</form>
+</body>
+</html>

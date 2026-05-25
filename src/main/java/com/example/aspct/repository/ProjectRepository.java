@@ -24,9 +24,31 @@ public class ProjectRepository {
         this.projectRowMapper = new ProjectRowMapper();
     }
 
+    public List<Project> findAllActive(){
+        String sql = """
+                SELECT project_id, company_name, project_name, deadline, description, created_at, is_archived
+                FROM project
+                WHERE is_archived = FALSE
+                ORDER BY created_at DESC
+                """;
+
+        return jdbcTemplate.query(sql, projectRowMapper);
+    }
+
+    public List<Project> findAllArchived(){
+        String sql = """
+                SELECT project_id, company_name, project_name, deadline, description, created_at, is_archived
+                FROM project
+                WHERE is_archived = TRUE
+                ORDER BY created_at DESC
+                """;
+
+        return jdbcTemplate.query(sql, projectRowMapper);
+    }
+
     public List<Project> findAll() {
         String sql = """
-                SELECT project_id, company_name, project_name, deadline, description, created_at
+                SELECT project_id, company_name, project_name, deadline, description, created_at, is_archived
                 FROM project
                 ORDER BY created_at DESC
                 """;
@@ -35,7 +57,7 @@ public class ProjectRepository {
 
     public Project findById(int projectId) {
         String sql = """
-                SELECT project_id, company_name, project_name, deadline, description, created_at
+                SELECT project_id, company_name, project_name, deadline, description, created_at, is_archived
                 FROM project
                 WHERE project_id = ?
                 """;
@@ -77,6 +99,16 @@ public class ProjectRepository {
                 Date.valueOf(project.getDeadline()),
                 project.getDescription(),
                 project.getProjectId());
+    }
+
+    public void archiveById(int projectId){
+        String sql = "UPDATE project SET is_archived = TRUE WHERE project_id = ?";
+        jdbcTemplate.update(sql, projectId);
+    }
+
+    public void restoreById(int projectId){
+        String sql = "UPDATE project SET is_archived = FALSE WHERE project_id = ?";
+        jdbcTemplate.update(sql, projectId);
     }
 
     public void deleteById(int projectId) {
