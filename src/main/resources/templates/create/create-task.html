@@ -34,7 +34,6 @@
 
 	<div style="margin-top: 15px;">
 		<button type="submit">Save Changes</button>
-		<!-- Dynamically routes back to the specific parent sub-project's task board view -->
 		<button type="button">
 			<a th:href="@{/subprojects/{id}/tasks(id=*{subProjectId})}" style="text-decoration: none; color: red;">Cancel</a>
 		</button>
