@@ -21,6 +21,7 @@
 	<div>
 		<label for="deadline">Target Deadline:</label>
 		<input type="date" id="deadline" th:field="*{deadline}" required />
+		<p th:if="${invalidDeadline}" th:text="${invalidDeadline}" style="color: red;"></p>
 	</div>
 
 	<div>

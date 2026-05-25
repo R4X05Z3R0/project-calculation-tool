@@ -1,7 +1,9 @@
 package com.example.aspct.service;
 
+import com.example.aspct.exceptions.ResourceNotFoundException;
 import com.example.aspct.model.Project;
 import com.example.aspct.repository.ProjectRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,9 +49,13 @@ public class ProjectService {
 
     // GET single project with full tree: project -> subProjects -> tasks
     public Project getProject(int projectId) {
-        Project project = projectRepository.findById(projectId);
-        project.setSubProjects(subProjectService.getSubProjectsWithTasks(projectId));
-        return project;
+        try {
+            Project project = projectRepository.findById(projectId);
+            project.setSubProjects(subProjectService.getSubProjectsWithTasks(projectId));
+            return project;
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("ID: " + projectId + " was not found");
+        }
     }
 
     // CREATE

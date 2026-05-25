@@ -2,6 +2,7 @@ package com.example.aspct.controller;
 
 
 
+import com.example.aspct.exceptions.InvalidDeadlineException;
 import com.example.aspct.model.Planner;
 import com.example.aspct.model.Project;
 import com.example.aspct.model.SubProject;
@@ -14,6 +15,7 @@ import com.example.aspct.service.PlannerService;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -35,7 +37,7 @@ public class ProjectController {
         this.employeeService = employeeService;
     }
 
-    //I am adding the comments so I don't get confused... It isn't AI. Just saying.
+    //I am adding the comments, so I don't get confused... It isn't AI. Just saying.
 
 //    // GET /projects/ — list all projects
 //    @GetMapping("/")
@@ -91,6 +93,13 @@ public class ProjectController {
     // POST /projects/create — create a project
     @PostMapping("/create")
     public String createProject(@ModelAttribute Project project) {
+
+        if(project.getDeadline() != null && project.getDeadline().isBefore(LocalDate.now())){
+            throw   new InvalidDeadlineException(
+                    "Error: Deadline cannot be in the past",
+                    project, "project", "create/create-project"
+            );
+        }
         projectService.createProject(project);
 
         return "redirect:/projects/";
