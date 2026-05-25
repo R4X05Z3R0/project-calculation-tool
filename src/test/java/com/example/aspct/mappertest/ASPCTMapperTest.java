@@ -99,10 +99,12 @@ public class ASPCTMapperTest {
 
         when(rs.getInt("task_id")).thenReturn(1);
         when(rs.getInt("subproject_id")).thenReturn(5);
+        when(rs.getObject("competency_id", Integer.class)).thenReturn(2);
         when(rs.getString("name")).thenReturn("Database Design");
         when(rs.getDouble("estimated_hours")).thenReturn(12.5);
         when(rs.getString("description")).thenReturn("Design the Database");
         when(rs.getDate("deadline")).thenReturn(Date.valueOf(deadline));
+
 
         TaskRowMapper mapper = new TaskRowMapper();
         Task task = mapper.mapRow(rs, 1);
@@ -114,6 +116,7 @@ public class ASPCTMapperTest {
         assertEquals(12.5, task.getEstimatedHours());
         assertEquals("Design the Database", task.getDescription());
         assertEquals(deadline, task.getDeadline());
+        assertEquals(2, task.getCompetencyId());
 
     }
     @Test

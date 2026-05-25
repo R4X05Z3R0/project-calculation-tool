@@ -28,8 +28,8 @@ public class TaskServiceTest {
 
     @BeforeEach
     void setUp() {
-        task1 = new Task(1, 1, "Design", 10, LocalDate.of(2026, 5, 20), "frontend design");
-        task2 = new Task(2, 1, "build", 20, LocalDate.of(2026, 5, 25), "backend implementation");
+        task1 = new Task(1, 1, "Design", 10, LocalDate.of(2026, 5, 20), "frontend design",1);
+        task2 = new Task(2, 1, "build", 20, LocalDate.of(2026, 5, 25), "backend implementation", null);
     }
 
     @Test

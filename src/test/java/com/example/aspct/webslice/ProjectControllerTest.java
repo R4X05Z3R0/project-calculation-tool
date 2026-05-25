@@ -1,11 +1,13 @@
 package com.example.aspct.webslice;
 
 import com.example.aspct.controller.ProjectController;
+import com.example.aspct.model.Employee;
 import com.example.aspct.model.Project;
 import com.example.aspct.model.SubProject;
+import com.example.aspct.service.EmployeeService;
+import com.example.aspct.service.PlannerService;
 import com.example.aspct.service.ProjectService;
 import com.example.aspct.service.SubProjectService;
-import com.example.aspct.service.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -37,7 +39,10 @@ public class ProjectControllerTest{
     private SubProjectService subProjectService;
 
     @MockitoBean
-    private TaskService taskService;
+    private PlannerService plannerService;
+
+    @MockitoBean
+    private EmployeeService employeeService;
 
     private Project testProject; //Test Project
     private List<Project> testProjectList; //List of test projects
