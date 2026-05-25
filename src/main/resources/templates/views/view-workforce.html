@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <h1 th:text="'Workforce Planner for ' + ${project.projectName}"></h1>
+
+  <section>
+    <h2>Planner Estimates</h2>
+    <!-- viser alt dataen samlet fra Project(sub,task) og Employees bla. gennem Planners datobehandling.    -->
+    <p>
+      Samlet Estimeret arbejdsbyrde (Timeantal):
+      <span th:text="${planner.workloadHours}"></span>
+    </p>
+
+    <p>
+      Daglig kapacitet for arbejdsstyrken:
+      <span th:text="${planner.workforceDailyHours}"></span>
+    </p>
+
+    <p>
+      Arbejdsdage :
+      <span th:text="${planner.workDaysNeeded}"></span>
+    </p>
+
+    <p>
+      Forventet slutdato :
+      <span th:text="${planner.expectedFinishDate}"></span>
+    </p>
+
+    <p>
+      Deadline:
+      <span th:text="${planner.deadline}"></span>
+    </p>
+
+    <p>
+      On track:
+      <span th:text="${planner.onTrack}"></span>
+    </p>
+  </section>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Daily hours</th>
+      <th>Action</th>
+    </tr>
+
+    <tr th:each="employee : ${workforce}">
+      <td th:text="${employee.name}"></td>
+      <td th:text="${employee.dailyHours}"></td>
+      <td>
+        <form th:action="@{/projects/{id}/workforce/remove(id=${project.projectId})}" method="post">
+          <input type="hidden" name="employeeId" th:value="${employee.employeeId}">
+          <button type="submit">Remove</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+  </section>
+
+  <section>
+    <h2>Available Employees</h2>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Daily hours</th>
+        <th>Action</th>
+      </tr>
+
+      <tr th:each="employee : ${availableEmployees}">
+        <td th:text="${employee.name}"></td>
+        <td th:text="${employee.dailyHours}"></td>
+        <td>
+          <form th:action="@{/projects/{id}/workforce/add(id=${project.projectId})}" method="post">
+            <input type="hidden" name="employeeId" th:value="${employee.employeeId}">
+            <button type="submit">Add</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+</head>
+<body>
+
+</body>
+</html>
