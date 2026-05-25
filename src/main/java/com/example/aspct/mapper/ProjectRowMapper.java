@@ -19,6 +19,7 @@ public class ProjectRowMapper implements RowMapper<Project> {
         project.setProjectName(rs.getString("project_name"));
         project.setDeadline(rs.getDate("deadline").toLocalDate());
         project.setDescription(rs.getString("description"));
+        project.setArchived(rs.getBoolean("is_archived"));
 
         Timestamp createdAt = rs.getTimestamp("created_at");
         if (createdAt != null) {

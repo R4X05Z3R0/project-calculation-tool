@@ -45,6 +45,17 @@ public class ProjectServiceTest {
     }
 
     @Test
+    void testListOfActiveProjects(){
+        project1.setArchived(false);
+
+        when(projectRepository.findAllActive()).thenReturn(List.of(project1));
+        List<Project> result = projectService.getAllActiveProjects();
+
+        assertEquals(1, result.size());
+        verify(projectRepository, times(1)).findAllActive();
+    }
+
+    @Test
     void getAllProjects_returnList(){
         when(projectRepository.findAll()).thenReturn(List.of(project1, project2));
 

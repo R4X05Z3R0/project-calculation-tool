@@ -7,13 +7,9 @@ import com.example.aspct.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
-
-// REST FOUNDATION — test all endpoints with Postman before adding HTML views.
-// To evolve to MVC: replace @RestController with @Controller,
-// inject Model, return view name strings instead of objects,
-// and replace @RequestBody with @ModelAttribute.
 
 @Controller
 @RequestMapping("/subprojects")
@@ -27,19 +23,23 @@ public class SubProjectController {
         this.taskService = taskService;
     }
 
-    // GET /subprojects/{id} — single sub-project (US-3)
-    @GetMapping("/{subProjectId}")
-    public SubProject getSubProject(@PathVariable int subProjectId) {
-        return subProjectService.getSubProject(subProjectId);
+    // GET /subprojects/create-form - Shows create form for subproject
+    @GetMapping("/create-form")
+    public String getSubProject(@RequestParam int projectId, Model model) {
+        SubProject newSubproject = new SubProject();
+        newSubproject.setProjectId(projectId);
+
+        model.addAttribute("subProject", newSubproject);
+        return "create/create-subproject";
     }
 
-    // GET /api/subprojects/{id}/total-hours — sub-project total (US-10)
+    // GET /subprojects/{id}/total-hours — sub-project total
     @GetMapping("/{subProjectId}/total-hours")
     public double getTotalHours(@PathVariable int subProjectId) {
         return taskService.getTotalHoursForSubProject(subProjectId);
     }
 
-    // GET /api/subprojects/{id}/tasks — all tasks for a sub-project
+    // GET /subprojects/{id}/tasks — all tasks for a sub-project
     @GetMapping("/{subProjectId}/tasks")
     public String getTasks(@PathVariable int subProjectId, Model model) {
         SubProject subProject = subProjectService.getSubProject(subProjectId);
@@ -51,22 +51,40 @@ public class SubProjectController {
         return "views/view-tasks";
     }
 
-    // POST /api/subprojects — create a sub-project under a project (US-6)
-    @PostMapping
-    public SubProject createSubProject(@RequestBody SubProject subProject) {
-        return subProjectService.createSubProject(subProject);
+    //GET /subprojects/id/edit-form - Edit form for subproject
+    @GetMapping("/{subProjectId}/edit-form")
+    public String editSubProject(@PathVariable int subProjectId, Model model){
+        SubProject subProjectToEdit = subProjectService.getSubProject(subProjectId);
+        model.addAttribute("subProject", subProjectToEdit);
+
+        return "edit/edit-subprojects";
     }
 
-    // PUT /api/subprojects/{id} — update a sub-project (US-7)
+    // POST /subprojects/create — create a sub-project under a project
+    @PostMapping("/create")
+    public String createSubProject(@ModelAttribute SubProject subProject) {
+        subProjectService.createSubProject(subProject);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/projects/" + subProject.getProjectId() +"/subprojects";
+    }
+
+    // POST /subprojects/{id}/update — update a sub-project
     @PostMapping("/{subProjectId}/update")
-    public void updateSubProject(@PathVariable int subProjectId, @RequestBody SubProject subProject) {
+    public String updateSubProject(@PathVariable int subProjectId, @ModelAttribute SubProject subProject) {
         subProject.setSubProjectId(subProjectId);
         subProjectService.updateSubProject(subProject);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/projects/" + subProject.getProjectId() + "/subprojects";
     }
 
-    // DELETE /api/subprojects/{id} — delete a sub-project and cascade tasks (US-7)
+    // DELETE /subprojects/{id}/delete — delete a sub-project and cascade tasks
     @PostMapping("/{subProjectId}/delete")
-    public void deleteSubProject(@PathVariable int subProjectId) {
+    public String deleteSubProject(@PathVariable int subProjectId, @RequestParam int projectId) {
         subProjectService.deleteSubProject(subProjectId);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/projects/" + projectId + "/subprojects";
     }
 }

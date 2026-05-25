@@ -2,15 +2,12 @@ package com.example.aspct.controller;
 
 import com.example.aspct.model.Task;
 import com.example.aspct.service.TaskService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-// REST FOUNDATION — test all endpoints with Postman before adding HTML views.
-// To evolve to MVC: replace @RestController with @Controller,
-// inject Model, return view name strings instead of objects,
-// and replace @RequestBody with @ModelAttribute.
-
-@RestController
-@RequestMapping("/api/tasks")
+@Controller
+@RequestMapping("/tasks")
 public class TaskController {
 
     private final TaskService taskService;
@@ -19,28 +16,50 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    // GET /api/tasks/{id} — single task (US-8)
-    @GetMapping("/{taskId}")
-    public Task getTask(@PathVariable int taskId) {
-        return taskService.getTask(taskId);
+    // GET /tasks/create-form — Task view form
+    @GetMapping("/create-form")
+    public String getTask(@RequestParam int subProjectId, Model model) {
+        Task newTask = new Task();
+        newTask.setSubProjectId(subProjectId);
+
+        model.addAttribute("task", newTask);
+        return "create/create-task";
     }
 
-    // POST /api/tasks — create a task under a sub-project (US-8)
-    @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskService.createTask(task);
+    // POST /tasks — create a task under a sub-project
+    @PostMapping("/create")
+    public String createTask(@ModelAttribute Task task) {
+        taskService.createTask(task);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/subprojects/" + task.getSubProjectId() +"/tasks";
     }
 
-    // PUT /api/tasks/{id} — update a task (US-9)
-    @PutMapping("/{taskId}")
-    public void updateTask(@PathVariable int taskId, @RequestBody Task task) {
+    // GET /tasks/{id}/edit — Edit form for tasks
+    @GetMapping("/{taskId}/edit")
+    public String editTask(@PathVariable int taskId, Model model){
+        Task taskToEdit = taskService.getTask(taskId);
+        model.addAttribute("task", taskToEdit);
+
+        return "edit/edit-task";
+    }
+
+    // POST /tasks/{id} — update a task
+    @PostMapping("/{taskId}/update")
+    public String updateTask(@PathVariable int taskId, @ModelAttribute Task task) {
         task.setTaskId(taskId);
         taskService.updateTask(task);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/subprojects/" + task.getSubProjectId() + "/tasks";
     }
 
-    // DELETE /api/tasks/{id} — delete a task (US-9)
-    @DeleteMapping("/{taskId}")
-    public void deleteTask(@PathVariable int taskId) {
+    // Post /tasks/{id}/delete — delete a task
+    @PostMapping ("/{taskId}/delete")
+    public String deleteTask(@PathVariable int taskId, @RequestParam int subProjectId) {
         taskService.deleteTask(taskId);
+
+        //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore
+        return "redirect:/subprojects/" + subProjectId +"/tasks";
     }
 }
