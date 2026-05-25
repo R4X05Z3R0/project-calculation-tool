@@ -2,7 +2,7 @@ package com.example.aspct.model;
 
 import java.time.LocalDate;
 
-// Kan evt udvides med antal medarbejdere, nu hvor project_worker table eksisterer.
+// TODO Kan evt udvides med "antal medarbejdere", nu hvor project_worker table eksisterer.
 
 public class Planner {
 

@@ -23,22 +23,20 @@ public class TaskService {
         return taskRepository.findBySubProjectId(subProjectId);
     }
 
-    // En enkelt task
     public Task getTask(int taskId) {
         return taskRepository.findById(taskId);
     }
 
-    // CREATE
     public Task createTask(Task task) {
         return taskRepository.save(task);
     }
 
-    // UPDATE
+
     public void updateTask(Task task) {
         taskRepository.update(task);
     }
 
-    // DELETE
+
     public void deleteTask(int taskId) {
         taskRepository.deleteById(taskId);
     }

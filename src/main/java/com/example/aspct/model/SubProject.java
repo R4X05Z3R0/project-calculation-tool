@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+//Underdel af projektet, indeholder tasks der er  kan senere udvides til at
 //
 public class SubProject {
 

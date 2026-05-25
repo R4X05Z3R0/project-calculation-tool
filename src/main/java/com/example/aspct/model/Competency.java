@@ -1,9 +1,9 @@
 package com.example.aspct.model;
-// Bruges ikke i denne version, men er til stede til evt. at udvide med specialistroller.
+//TODO Bruges ikke i denne version, men er stadig til stede til evt. at udvide med specialistroller.
 
 // **GAMMEL KOMMENTAR** Repræsentant for et " Kompetencekrav" - dette kan være en UX/UI, database, eller andet område der kræver
 //specielle arbejdsegenskaber der skal bruges til et specifikt projekt.  Dette er modellen for alle  forskellige arbejdstyper og deres
-// typer kompetencer.  Dette er selve kompetence"arbejderpuljen" der indeholder en "dailyCapacityHours" for en samlet fiktiv kapacitet
+// typer kompetencer.  Indeholder en "dailyCapacityHours" for en samlet fiktiv kapacitet
 //   Hver Employee vil have en kompetence i Phase 1 og dette vil erstatte " dailyCapacityHours" fra "kompetencepuljen".
 
 

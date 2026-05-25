@@ -33,7 +33,7 @@ public class EmployeeRepository {
         String sql = """
             SELECT e.employee_id, e.name, e.competency_id, e.daily_hours
             FROM employee e
-            JOIN project_employee pe 
+            JOIN project_employee pe
                 ON e.employee_id = pe.employee_id
             WHERE pe.project_id = ?
             ORDER BY e.employee_id
