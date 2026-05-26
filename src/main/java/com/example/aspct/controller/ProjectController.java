@@ -135,7 +135,7 @@ public class ProjectController {
         model.addAttribute("workforce", employeeService.getProjectWorkforce(projectId));
         model.addAttribute("availableEmployees", employeeService.getAvailableEmployeesForProject(projectId));
         model.addAttribute("workforceDailyHours", employeeService.getWorkforceDailyHoursForProject(projectId));
-
+        model.addAttribute("estimatedCost",plannerService.calculateStandardPriceEstimate(planner.getWorkloadHours()) );
         return "views/view-workforce";
     }
  // Tilføjer en medarbejder til ProjektWorkforce. -> backend (project_employee)
