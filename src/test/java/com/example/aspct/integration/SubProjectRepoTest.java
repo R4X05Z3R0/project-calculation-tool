@@ -7,6 +7,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +19,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 @SpringBootTest
 @ActiveProfiles("test")
+@Transactional
 @Sql(scripts = "classpath:h2init.sql", executionPhase = BEFORE_TEST_METHOD)
 class SubProjectRepoTest {
 
@@ -46,7 +49,6 @@ class SubProjectRepoTest {
     void insertAndReadBack() {
         SubProject newSubProject = new SubProject();
 
-        newSubProject.setSubProjectId(9);
         newSubProject.setProjectId(1);
         newSubProject.setName("Security Framework");
         newSubProject.setDeadline(LocalDate.now().plusDays(14));
@@ -77,6 +79,6 @@ class SubProjectRepoTest {
     void deleteById() {
         repo.deleteById(1);
 
-        assertThrows(Exception.class, () -> repo.findById(1));
+        assertThrows(EmptyResultDataAccessException.class, () -> repo.findById(1));
     }
 }

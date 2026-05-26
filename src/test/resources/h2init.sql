@@ -137,3 +137,4 @@ INSERT INTO employee (employee_id, name, competency_id, daily_hours) VALUES
                                                                          (9, 'Ida Sørensen', 7, 6.00);
 
 ALTER TABLE project ALTER COLUMN project_id RESTART WITH 6;
+ALTER TABLE subproject ALTER COLUMN subproject_id RESTART WITH 9;
