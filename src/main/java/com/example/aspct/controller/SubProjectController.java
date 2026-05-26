@@ -65,7 +65,7 @@ public class SubProjectController {
     @PostMapping("/create")
     public String createSubProject(@ModelAttribute SubProject subProject) {
 
-        if (subProject != null && subProject.getDeadline().isBefore(LocalDate.now())){
+        if (subProject.getDeadline().isBefore(LocalDate.now())){
             throw new InvalidDeadlineException(
                     "Error: Deadline cannot be set in the past",
                     subProject, "subProject",
