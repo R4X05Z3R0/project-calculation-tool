@@ -34,8 +34,8 @@
     </p>
 
     <p>
-      Arbejdsdage :
-      <strong th:text="${planner.workDaysNeeded}">0</strong>
+      Arbejdsdage:
+      <strong th:text="${planner.workDaysNeeded == -1} ? 'Ingen' : ${planner.workDaysNeeded}">0</strong>
     </p>
       <span th:if="${planner.workDaysNeeded == -1}">
     Ingen arbejdsstyrke allokeret
@@ -57,7 +57,7 @@
 
     <p>
       On track:
-      <strong th:text="${planner.onTrack}">Yes</strong>
+      <strong th:text="${planner.onTrack == false} ? 'Inactive' : 'Active'">Yes</strong>
     </p>
   </section>
 
