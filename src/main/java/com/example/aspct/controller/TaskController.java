@@ -33,7 +33,7 @@ public class TaskController {
     @PostMapping("/create")
     public String createTask(@ModelAttribute Task task) {
 
-        if(task != null && task.getDeadline().isBefore(LocalDate.now())){
+        if(task.getDeadline().isBefore(LocalDate.now())){
             throw new InvalidDeadlineException(
                     "Error: Deadline cannot be set in the past",
                     task, "task", "create/create-task"
