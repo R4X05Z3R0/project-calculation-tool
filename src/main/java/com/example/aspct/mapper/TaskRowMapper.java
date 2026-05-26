@@ -2,7 +2,6 @@ package com.example.aspct.mapper;
 
 import com.example.aspct.model.Task;
 import org.springframework.jdbc.core.RowMapper;
-
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +17,7 @@ public class TaskRowMapper implements RowMapper<Task> {
         task.setName(rs.getString("name"));
         task.setEstimatedHours(rs.getDouble("estimated_hours"));
         task.setDescription(rs.getString("description"));
+        task.setCompetencyId(rs.getObject("competency_id", Integer.class));
 
         Date deadline = rs.getDate("deadline");
         if (deadline != null) {

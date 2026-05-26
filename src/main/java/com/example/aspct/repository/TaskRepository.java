@@ -25,7 +25,7 @@ public class TaskRepository {
 
     public List<Task> findBySubProjectId(int subProjectId) {
         String sql = """
-                SELECT task_id, subproject_id, name, estimated_hours, deadline, description
+                SELECT task_id, subproject_id, competency_id, name, estimated_hours, deadline, description
                 FROM task
                 WHERE subproject_id = ?
                 ORDER BY task_id
@@ -35,7 +35,7 @@ public class TaskRepository {
 
     public Task findById(int taskId) {
         String sql = """
-                SELECT task_id, subproject_id, name, estimated_hours, deadline, description
+                SELECT task_id, subproject_id, competency_id, name, estimated_hours, deadline, description
                 FROM task
                 WHERE task_id = ?
                 """;
@@ -44,18 +44,24 @@ public class TaskRepository {
 
     public Task save(Task task) {
         String sql = """
-                INSERT INTO task (subproject_id, name, estimated_hours, deadline, description)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO task (subproject_id, competency_id, name, estimated_hours, deadline, description)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """;
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, task.getSubProjectId());
-            ps.setString(2, task.getName());
-            ps.setDouble(3, task.getEstimatedHours());
-            ps.setDate(4, task.getDeadline() != null ? Date.valueOf(task.getDeadline()) : null);
-            ps.setString(5, task.getDescription());
+            if (task.getCompetencyId() != null) {
+                ps.setInt(2, task.getCompetencyId());
+            } else {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            }
+            ps.setString(3, task.getName());
+            ps.setDouble(4, task.getEstimatedHours());
+            ps.setDate(5, task.getDeadline() != null ? Date.valueOf(task.getDeadline()) : null);
+            ps.setString(6, task.getDescription());
+
             return ps;
         }, keyHolder);
 
@@ -69,7 +75,7 @@ public class TaskRepository {
     public void update(Task task) {
         String sql = """
                 UPDATE task
-                SET name = ?, estimated_hours = ?, deadline = ?, description = ?
+                SET name = ?, estimated_hours = ?, deadline = ?, description = ?, competency_id = ?
                 WHERE task_id = ?
                 """;
         jdbcTemplate.update(sql,
@@ -77,7 +83,8 @@ public class TaskRepository {
                 task.getEstimatedHours(),
                 task.getDeadline() != null ? Date.valueOf(task.getDeadline()) : null,
                 task.getDescription(),
-                task.getTaskId());
+                task.getCompetencyId(),
+                task.getTaskId() );
     }
 
     public void deleteById(int taskId) {

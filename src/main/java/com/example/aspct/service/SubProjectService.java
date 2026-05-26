@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Service lag - Gemmer Sub-projekter og deres tasks i databasen.
+// udregner getTotalHoursForProject baseret på en liste af alle Sub-Projekter.
+//
+
 @Service
 public class SubProjectService {
 
@@ -17,12 +21,13 @@ public class SubProjectService {
         this.taskService = taskService;
     }
 
-    // GET all sub-projects for a project (lists empty — used for flat operations)
+    // Laver liste af Sub-projekter med samme ProjectID
+
     public List<SubProject> getSubProjectsByProjectId(int projectId) {
         return subProjectRepository.findByProjectId(projectId);
     }
 
-    // GET all sub-projects with their tasks populated (used when building the full project tree)
+// Laver liste af Sub-projekter med samme ProjectID. Kører listen igennem og samler alle tasks med en af disse Sub-projekt ID'er.
     public List<SubProject> getSubProjectsWithTasks(int projectId) {
         List<SubProject> subProjects = subProjectRepository.findByProjectId(projectId);
         for (SubProject subProject : subProjects) {
@@ -31,27 +36,25 @@ public class SubProjectService {
         return subProjects;
     }
 
-    // GET single sub-project
     public SubProject getSubProject(int subProjectId) {
         return subProjectRepository.findById(subProjectId);
     }
 
-    // CREATE
     public SubProject createSubProject(SubProject subProject) {
         return subProjectRepository.save(subProject);
     }
 
-    // UPDATE
     public void updateSubProject(SubProject subProject) {
         subProjectRepository.update(subProject);
     }
 
-    // DELETE (tasks cascade via DB)
     public void deleteSubProject(int subProjectId) {
         subProjectRepository.deleteById(subProjectId);
     }
 
-    // CALCULATE total estimated hours for a project (US-11)
+
+    // Samler Sub-projekters estimatedhours fra tasks, og giver et samlet estimatedhours for hele Projektet.
+
     public double getTotalHoursForProject(int projectId) {
         List<SubProject> subProjects = subProjectRepository.findByProjectId(projectId);
         double total = 0;

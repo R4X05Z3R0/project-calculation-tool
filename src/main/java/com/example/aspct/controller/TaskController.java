@@ -1,10 +1,13 @@
 package com.example.aspct.controller;
 
+import com.example.aspct.exceptions.InvalidDeadlineException;
 import com.example.aspct.model.Task;
 import com.example.aspct.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/tasks")
@@ -26,9 +29,16 @@ public class TaskController {
         return "create/create-task";
     }
 
-    // POST /tasks — create a task under a sub-project
+    // POST /tasks — create a task under a sub-project (US-8)
     @PostMapping("/create")
     public String createTask(@ModelAttribute Task task) {
+
+        if(task.getDeadline().isBefore(LocalDate.now())){
+            throw new InvalidDeadlineException(
+                    "Error: Deadline cannot be set in the past",
+                    task, "task", "create/create-task"
+            );
+        }
         taskService.createTask(task);
 
         //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore

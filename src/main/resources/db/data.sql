@@ -5,7 +5,7 @@ INSERT INTO project (
     project_name,
     deadline,
     description,
-    is_archived, -- 👈 Added here
+    is_archived,
     created_at
 ) VALUES
       (1, 'Acme Ltd', 'Website Redesign', '2026-06-30', 'Redesign and relaunch the company website', FALSE, '2026-05-04 13:00:00'),
@@ -69,3 +69,20 @@ INSERT INTO task (
       (11, 7, 1, 'Build D3.js Charts', 25.00, '2026-11-15', 'Create dynamic bar and line charts for energy usage'),
       (12, 8, 2, 'IoT Gateway Setup', 40.00, '2026-12-10', 'Establish MQTT protocol connections for smart meters'),
       (13, 7, 7, 'Predictive Usage Model', 35.00, '2026-11-25', 'Develop AI model to forecast peak energy demand');
+
+
+INSERT INTO employee (
+    employee_id,
+    name,
+    competency_id,
+    daily_hours
+) VALUES
+      (1, 'Alice Jensen', 1, 6.00),
+      (2, 'Mikkel Hansen', 1, 5.50),
+      (3, 'Sara Nielsen', 2, 7.00),
+      (4, 'Jonas Berg', 2, 6.50),
+      (5, 'Nora Petersen', 3, 5.00),
+      (6, 'Emil Larsen', 4, 6.00),
+      (7, 'Freja Holm', 5, 7.50),
+      (8, 'Oscar Madsen', 6, 5.00),
+      (9, 'Ida Sørensen', 7, 6.00);
