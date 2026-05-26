@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/view-workforce.css}">
   <title th:text="'ASPCT | Workforce Planner for ' + ${project.projectName}">ASPCT | Workforce Planner</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
     </p>
     <p>
       Estimeret omkostning (250dkk/t):
-      <strong th:text="${estimatedCost}"></strong>
+      <strong class="cost-value" th:text="${estimatedCost}"></strong>
       DKK
     </p>
 
@@ -42,6 +43,7 @@
       <span th:unless="${planner.workDaysNeeded == -1}"
             th:text="${planner.workDaysNeeded}">
 </span>
+    </p>
 
     <p>
       Forventet slutdato :
@@ -50,7 +52,7 @@
 
     <p>
       Deadline:
-      <strong th:text="${planner.deadline}">01-01-2026</strong>
+      <strong class="deadline-value" th:text="${planner.deadline}">01-01-2026</strong>
     </p>
 
     <p>

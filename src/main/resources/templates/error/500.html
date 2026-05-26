@@ -6,13 +6,13 @@
 	<link rel="stylesheet" th:href="@{/css/error-500.css}">
 </head>
 <body>
-
+<div>
 <h1>Error 500 - Something Went Wrong</h1>
 <p>An unexpected error occurred on our server. Our team has been notified.</p>
 
 <p th:if="${serverError}" th:text="${serverError}" style="color: gray; font-style: italic;"></p>
 
 <a th:href="@{/projects/}">Back to Safety</a>
-
+</div>
 </body>
 </html>
