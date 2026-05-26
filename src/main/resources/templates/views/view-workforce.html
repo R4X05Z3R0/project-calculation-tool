@@ -55,7 +55,7 @@
 
     <p>
       On track:
-      <strong th:text="${planner.onTrack}">Yes</strong>
+      <strong th:text="${planner.onTrack == false} ? 'Inactive' : 'Active'">Yes</strong>
     </p>
   </section>
 

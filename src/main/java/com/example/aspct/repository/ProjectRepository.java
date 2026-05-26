@@ -80,9 +80,11 @@ public class ProjectRepository {
             return ps;
         }, keyHolder);
 
-        Number key = keyHolder.getKey();
-        if (key != null) {
-            project.setProjectId(key.intValue());
+        if (keyHolder.getKeys() != null && keyHolder.getKeys().containsKey("project_id")) {
+            Number key = (Number) keyHolder.getKeys().get("project_id");
+            if (key != null) {
+                project.setProjectId(key.intValue());
+            }
         }
         return project;
     }
