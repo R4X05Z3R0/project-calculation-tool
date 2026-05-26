@@ -6,8 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class ASPCTModelTest {
@@ -48,7 +47,7 @@ public class ASPCTModelTest {
     @Test
     void testTaskConstructor(){
         LocalDate deadline = LocalDate.of(2026,5,19);
-        Task task = new Task(1,5,"Database Design", 12.5,deadline,"Design the Database");
+        Task task = new Task(1,5,"Database Design", 12.5,deadline,"Design the Database",null);
 
         assertEquals(1, task.getTaskId());
         assertEquals(5, task.getSubProjectId());
@@ -56,5 +55,6 @@ public class ASPCTModelTest {
         assertEquals(12.5, task.getEstimatedHours());
         assertEquals("Design the Database", task.getDescription());
         assertEquals(deadline, task.getDeadline());
+        assertNull(task.getCompetencyId());
     }
 }

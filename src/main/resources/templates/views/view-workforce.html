@@ -1,30 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-  <h1 th:text="'Workforce Planner for ' + ${project.projectName}"></h1>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="'ASPCT | Workforce Planner for ' + ${project.projectName}">ASPCT | Workforce Planner</title>
+</head>
+<body>
+
+<div>
+  <div>
+    <h1 th:text="'Workforce Planner for ' + ${project.projectName}">Workforce Planner for Project</h1>
+    <button><a th:href="@{/projects/{projectId}/subprojects(projectId=${project.projectId})}">← Back to Project</a></button>
+  </div>
+
+  <hr>
 
   <section>
     <h2>Planner Estimates</h2>
     <!-- viser alt dataen samlet fra Project(sub,task) og Employees bla. gennem Planners datobehandling.    -->
     <p>
       Samlet Estimeret arbejdsbyrde (Timeantal):
-      <span th:text="${planner.workloadHours}"></span>
+      <strong th:text="${planner.workloadHours}">0</strong>
     </p>
     <p>
       Estimeret omkostning (250dkk/t):
-      <span th:text="${estimatedCost}"></span>
+      <strong th:text="${estimatedCost}"></strong>
       DKK
     </p>
 
     <p>
       Daglig kapacitet for arbejdsstyrken:
-      <span th:text="${planner.workforceDailyHours}"></span>
+      <strong th:text="${planner.workforceDailyHours}">0</strong>
     </p>
 
     <p>
       Arbejdsdage :
+      <strong th:text="${planner.workDaysNeeded}">0</strong>
+    </p>
       <span th:if="${planner.workDaysNeeded == -1}">
     Ingen arbejdsstyrke allokeret
 </span>
@@ -35,64 +47,84 @@
 
     <p>
       Forventet slutdato :
-      <span th:text="${planner.expectedFinishDate}"></span>
+      <strong th:text="${planner.expectedFinishDate}">01-01-2026</strong>
     </p>
 
     <p>
       Deadline:
-      <span th:text="${planner.deadline}"></span>
+      <strong th:text="${planner.deadline}">01-01-2026</strong>
     </p>
 
     <p>
       On track:
-      <span th:text="${planner.onTrack}"></span>
+      <strong th:text="${planner.onTrack}">Yes</strong>
     </p>
   </section>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Daily hours</th>
-      <th>Action</th>
-    </tr>
 
-    <tr th:each="employee : ${workforce}">
-      <td th:text="${employee.name}"></td>
-      <td th:text="${employee.dailyHours}"></td>
-      <td>
-        <form th:action="@{/projects/{id}/workforce/remove(id=${project.projectId})}" method="post">
-          <input type="hidden" name="employeeId" th:value="${employee.employeeId}">
-          <button type="submit">Remove</button>
-        </form>
-      </td>
-    </tr>
-  </table>
-  </section>
+  <hr>
 
   <section>
-    <h2>Available Employees</h2>
-
+    <h2>Current Workforce</h2>
     <table>
+      <thead>
       <tr>
         <th>Name</th>
         <th>Daily hours</th>
         <th>Action</th>
       </tr>
-
-      <tr th:each="employee : ${availableEmployees}">
-        <td th:text="${employee.name}"></td>
-        <td th:text="${employee.dailyHours}"></td>
+      </thead>
+      <tbody>
+      <tr th:if="${#lists.isEmpty(workforce)}">
+        <td colspan="3">Ingen medarbejdere tilføjet endnu</td>
+      </tr>
+      <tr th:each="employee : ${workforce}">
+        <td th:text="${employee.name}">Employee Name</td>
+        <td th:text="${employee.dailyHours}">0</td>
         <td>
-          <form th:action="@{/projects/{id}/workforce/add(id=${project.projectId})}" method="post">
+          <form th:action="@{/projects/{id}/workforce/remove(id=${project.projectId})}" th:method="POST" style="display:inline;">
             <input type="hidden" name="employeeId" th:value="${employee.employeeId}">
-            <button type="submit">Add</button>
+            <button type="submit">
+              <font color="red">Remove</font>
+            </button>
           </form>
         </td>
       </tr>
+      </tbody>
     </table>
   </section>
 
-</head>
-<body>
+  <hr>
+
+  <section>
+    <h2>Available Employees</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Daily hours</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:if="${#lists.isEmpty(availableEmployees)}">
+        <td colspan="3">Ingen tilgængelige medarbejdere</td>
+      </tr>
+      <tr th:each="employee : ${availableEmployees}">
+        <td th:text="${employee.name}">Employee Name</td>
+        <td th:text="${employee.dailyHours}">0</td>
+        <td>
+          <form th:action="@{/projects/{id}/workforce/add(id=${project.projectId})}" th:method="POST" style="display:inline;">
+            <input type="hidden" name="employeeId" th:value="${employee.employeeId}">
+            <button type="submit">
+              <font color="blue">Add</font>
+            </button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
 
 </body>
 </html>

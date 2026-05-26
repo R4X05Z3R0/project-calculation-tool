@@ -1,5 +1,6 @@
 package com.example.aspct.controller;
 
+import com.example.aspct.exceptions.InvalidDeadlineException;
 import com.example.aspct.model.SubProject;
 import com.example.aspct.model.Task;
 import com.example.aspct.service.SubProjectService;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -62,6 +64,14 @@ public class SubProjectController {
     // POST /subprojects/create — create a sub-project under a project
     @PostMapping("/create")
     public String createSubProject(@ModelAttribute SubProject subProject) {
+
+        if (subProject != null && subProject.getDeadline().isBefore(LocalDate.now())){
+            throw new InvalidDeadlineException(
+                    "Error: Deadline cannot be set in the past",
+                    subProject, "subProject",
+                    "create/create-subproject"
+            );
+        }
         subProjectService.createSubProject(subProject);
 
         //noinspection SpringMVCViewInspection - Apparently needed for Qodana to ignore

@@ -52,7 +52,11 @@ public class TaskRepository {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, task.getSubProjectId());
-            ps.setInt(2, task.getCompetencyId());
+            if (task.getCompetencyId() != null) {
+                ps.setInt(2, task.getCompetencyId());
+            } else {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            }
             ps.setString(3, task.getName());
             ps.setDouble(4, task.getEstimatedHours());
             ps.setDate(5, task.getDeadline() != null ? Date.valueOf(task.getDeadline()) : null);

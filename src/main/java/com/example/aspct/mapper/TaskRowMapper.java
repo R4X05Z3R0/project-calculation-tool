@@ -17,7 +17,7 @@ public class TaskRowMapper implements RowMapper<Task> {
         task.setName(rs.getString("name"));
         task.setEstimatedHours(rs.getDouble("estimated_hours"));
         task.setDescription(rs.getString("description"));
-        task.setCompetencyId(rs.getInt("competency_id"));
+        task.setCompetencyId(rs.getObject("competency_id", Integer.class));
 
         Date deadline = rs.getDate("deadline");
         if (deadline != null) {
