@@ -1,7 +1,140 @@
 
-
 :root {
     --paper-color:#ffffff;
     --ink-black:#000000;
-    --ink-grey:#66666;
+    --ink-grey:#666666;
 }
+
+body {
+    background-color: var(--paper-color);
+    background-image: radial-gradient(#eeeeee 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    font-family: 'Lexend', sans-serif;
+    color: var(--ink-black);
+    margin: 0;
+    min-height: 100vh;
+}
+
+body > div {
+   width: 95%;
+   max-width: 1000px;
+   background: white;
+   margin: 90px auto;
+   padding: 45px;
+   border-radius: 32px;
+   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+body > div > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+h1{
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin: 0;
+}
+
+button {
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50px;
+    padding: 10px 22px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button a {
+    color: var(--ink-black);
+    text-decoration: none;
+}
+
+button:hover {
+    background: var(--ink-black);
+    color: white;
+}
+
+button:hover a {
+    color: white;
+}
+
+hr {
+    border: none;
+    border-bottom: 1px dashed #ddd;
+    margin: 25px 0 30px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+thead {
+    border-bottom: 2px solid #f0f0f0;
+}
+
+th {
+    text-align: left;
+    padding: 18px 10px;
+    color: var(--ink-grey);
+    font-size: 0.9rem;
+    font-weight:500;
+}
+
+td {
+    padding: 24px 10px;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 0.95rem;
+}
+
+tbody tr {
+    transition: all 0.25s ease;
+}
+
+
+td a {
+    color: var(--ink-black);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+td a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+td form button {
+    border: none !important;
+    background: none !important;
+    color: #cc0000 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    opacity: 0.6;
+    text-decoration: none !important;
+}
+
+td form button:hover {
+    opacity: 1;
+    text-decoration: underline !important;
+}
+td[colspan="5"] {
+    text-align: center;
+    color: var(--ink-grey);
+    padding: 50px;
+}
+
+
+
+
+
+
+
