@@ -29,18 +29,7 @@ public class EmployeeRepository {
 
         return jdbcTemplate.query(sql, employeeRowMapper);
     }
-    public List<Employee> findByProjectId(int projectId) {
-        String sql = """
-            SELECT e.employee_id, e.name, e.competency_id, e.daily_hours
-            FROM employee e
-            JOIN project_employee pe
-                ON e.employee_id = pe.employee_id
-            WHERE pe.project_id = ?
-            ORDER BY e.employee_id
-            """;
 
-        return jdbcTemplate.query(sql, employeeRowMapper, projectId);
-    }
 // Tilføjer en medarbejder til  et "connector table" af Project ID og  Employee ID så man kan se hvem der er tilføjet.
 
     public void addEmployeeToProject(int projectId, int employeeId) {
