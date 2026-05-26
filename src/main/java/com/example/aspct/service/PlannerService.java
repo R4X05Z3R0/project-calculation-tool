@@ -121,5 +121,10 @@ public class PlannerService {
         return count;
     }
 
+    // Price calculator - presumes a 250 average pay per Hour for workers.
+    public double calculateStandardPriceEstimate(double workloadHours) {
+        return workloadHours * 250;
+    }
+
 
 }

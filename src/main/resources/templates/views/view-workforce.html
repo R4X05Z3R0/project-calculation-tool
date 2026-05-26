@@ -12,6 +12,11 @@
       Samlet Estimeret arbejdsbyrde (Timeantal):
       <span th:text="${planner.workloadHours}"></span>
     </p>
+    <p>
+      Estimeret omkostning (250dkk/t):
+      <span th:text="${estimatedCost}"></span>
+      DKK
+    </p>
 
     <p>
       Daglig kapacitet for arbejdsstyrken:
@@ -20,8 +25,13 @@
 
     <p>
       Arbejdsdage :
-      <span th:text="${planner.workDaysNeeded}"></span>
-    </p>
+      <span th:if="${planner.workDaysNeeded == -1}">
+    Ingen arbejdsstyrke allokeret
+</span>
+
+      <span th:unless="${planner.workDaysNeeded == -1}"
+            th:text="${planner.workDaysNeeded}">
+</span>
 
     <p>
       Forventet slutdato :
