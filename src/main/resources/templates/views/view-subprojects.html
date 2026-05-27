@@ -3,23 +3,28 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title th:text="'ASPCT | Subprojects for ' + ${project.projectName}">ASPCT | Subprojects</title>
+	<link rel="stylesheet" th:href="@{/css/view-subprojects.css}">
+	<title>ASPCT | Subprojects</title>
 </head>
 <body>
 
 <div>
-	<p><a th:href="@{/projects/}">← Back to Projects</a></p>
+	<p class="back-link"><a th:href="@{/projects/}">← Back to Projects</a></p>
 
-	<h1 th:text="'Subprojects for: ' + ${project.projectName}">Project Name</h1>
-	<button><a th:href="@{/subprojects/create-form(projectId=${project.projectId})}">+ New Subproject</a></button>
-	<button><a th:href="@{/projects/{projectId}/workforce(projectId=${project.projectId})}">View Project Estimates</a></button>
-	<p th:text="${project.description}">Project Description</p>
-	<p th:text="'Approximately ' + ${totalHours} + ' hours'">Total Hours</p>
-</div>
+	<div class="header-container">
+		<div class="header-content">
+			<h1 th:text="'Subprojects for: ' + ${project.projectName}">Project Name</h1>
+			<p class="project-desc" th:text="${project.description}">Project Description</p>
+			<p class="project-hours" th:text="'Approximately ' + ${totalHours} + ' hours'">Total Hours</p>
+		</div>
+		<div class="header-actions">
+			<button><a th:href="@{/subprojects/create-form(projectId=${project.projectId})}">+ New Subproject</a></button>
+			<button><a th:href="@{/projects/{projectId}/workforce(projectId=${project.projectId})}">View Project Estimates</a></button>
+		</div>
+	</div>
 
-<hr>
+	<hr>
 
-<div>
 	<table>
 		<thead>
 		<tr>
@@ -32,27 +37,24 @@
 		</thead>
 		<tbody>
 		<tr th:if="${#lists.isEmpty(subProjects)}">
-			<td>No subprojects found for this project.</td>
+			<td colspan="5">No subprojects found for this project.</td>
 		</tr>
 
 		<tr th:each="sub : ${subProjects}">
 			<td>
-				<a th:href="@{/subprojects/{id}/tasks(id=${sub.subProjectId})}"
-			        th:text="${sub.name}">Subproject Name</a>
+				<a class="subproject-link" th:href="@{/subprojects/{id}/tasks(id=${sub.subProjectId})}"
+				   th:text="${sub.name}">Subproject Name</a>
 			</td>
 
 			<td th:text="${#temporals.format(sub.deadline, 'dd-MM-yyyy')}">Deadline</td>
 			<td th:text="${sub.description}">Description text...</td>
 			<td th:text="${#lists.size(sub.tasks)}">0</td>
 			<td>
-				<a th:href="@{/subprojects/{subProjectId}/edit-form(subProjectId = ${sub.subProjectId})}">Edit</a>
+				<a class="edit-link" th:href="@{/subprojects/{subProjectId}/edit-form(subProjectId = ${sub.subProjectId})}">Edit</a> |
 
-				<form th:action="@{/subprojects/{id}/delete(id=${sub.subProjectId})}" method="post" style="display:inline; margin-left: 5px;">
-					<!-- We supply the active parent project ID so the controller can return here -->
+				<form th:action="@{/subprojects/{id}/delete(id=${sub.subProjectId})}" method="post">
 					<input type="hidden" name="projectId" th:value="${project.projectId}" />
-					<button type="submit"
-					        style="background:none; border:none; color:red; text-decoration:none; cursor:pointer; padding:0; font-family:inherit; font-size:inherit;"
-					        th:attr="onclick='return confirm(\'Are you sure you want to delete ' + ${sub.name} + '?\');'">
+					<button type="submit" class="delete-btn" th:attr="onclick='return confirm(\'Are you sure you want to delete ' + ${sub.name} + '?\');'">
 						Delete
 					</button>
 				</form>

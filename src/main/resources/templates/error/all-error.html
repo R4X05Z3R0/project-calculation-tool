@@ -2,23 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/error-all.css}">
 	<title>ASPCT | Error</title>
 </head>
 <body>
 
-<h2>Error <span th:text="${errorDetails.status}">000</span>: <span th:text="${errorDetails.error}">Error Title</span></h2>
+<div>
+	<h2>Error <span th:text="${errorDetails.status}">000</span>: <span th:text="${errorDetails.error}">Error Title</span></h2>
 
-<p th:text="${errorDetails.message}">An unexpected error occurred.</p>
+	<p th:text="${errorDetails.message}">An unexpected error occurred.</p>
 
-<p style="color: gray;">
-	Timestamp: <span th:text="${#temporals.format(errorDetails.timestamp, 'dd-MM-yyyy hh:mm a')}">Just now</span>
-</p>
+	<p style="color: gray;">
+		Timestamp: <span th:text="${#temporals.format(errorDetails.timestamp, 'dd-MM-yyyy hh:mm a')}">Just now</span>
+	</p>
 
-<hr>
+	<hr>
 
-<button type="button" >
-<a th:href="@{/projects/}">Back to Dashboard</a>
-</button>
+	<button type="button">
+		<a th:href="@{/projects/}">Back to Projects</a>
+	</button>
+</div>
 
 </body>
 </html>
