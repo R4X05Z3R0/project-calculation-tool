@@ -1,8 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap');
+
 :root {
-    --paper-color:#ffffff;
-    --ink-black:#000000;
-    --ink-grey:#666666;
+    --paper-color: #ffffff;
+    --ink-black: #000000;
+    --ink-grey: #666666;
+    --soft-border: #eeeeee;
+    --project-blue: #0057ff;
+    --edit-dark-blue: #0a1931;
+    --archive-red: #ff0000;
 }
 
 body {
@@ -16,95 +21,108 @@ body {
 }
 
 body > div {
-   width: 95%;
-   max-width: 1000px;
-   background: white;
-   margin: 90px auto;
-   padding: 45px;
-   border-radius: 32px;
-   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    width: 92%;
+    max-width: 1100px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    margin: 55px auto;
+    padding: 50px;
+    border-radius: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 body > div > div:first-child {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
+    gap: 25px;
 }
 
-h1{
+body > div > div:first-child > div {
+    display: flex;
+    gap: 12px;
+}
+
+h1 {
     font-size: 3rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -2px;
     margin: 0;
 }
 
+hr {
+    border: none;
+    border-bottom: 1px dashed #cfcfcf;
+    margin: 40px 0;
+}
+
 button {
     background: transparent;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 50px;
-    padding: 10px 22px;
+    padding: 0;
     font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 button a {
+    display: inline-block;
+    padding: 12px 24px;
     color: var(--ink-black);
+    font-size: 0.95rem;
+    font-weight: 500;
     text-decoration: none;
+    transition: all 0.25s ease;
 }
 
 button:hover {
     background: var(--ink-black);
-    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
 button:hover a {
     color: white;
 }
 
-hr {
-    border: none;
-    border-bottom: 1px dashed #ddd;
-    margin: 25px 0 30px 0;
-}
-
 table {
     width: 100%;
-    border-collapse: collapse;
-}
-
-
-thead {
-    border-bottom: 2px solid #f0f0f0;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border: 1px solid var(--soft-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
 }
 
 th {
     text-align: left;
-    padding: 18px 10px;
+    padding: 18px 28px;
     color: var(--ink-grey);
     font-size: 0.9rem;
-    font-weight:500;
+    font-weight: 700;
+    background: #fafafa;
 }
 
 td {
-    padding: 24px 10px;
-    border-bottom: 1px solid #f5f5f5;
+    padding: 18px 28px;
+    border-top: 1px solid #f2f2f2;
     font-size: 0.95rem;
 }
 
 tbody tr {
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
 }
 
+tbody tr:hover {
+    background: #fafafa;
+}
 
 td a {
-    color: var(--ink-black);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 td a:hover {
@@ -112,29 +130,59 @@ td a:hover {
     text-underline-offset: 4px;
 }
 
+td a.project-link {
+    color: var(--project-blue);
+}
+
+td a.edit-link {
+    color: var(--edit-dark-blue);
+}
+
+td form {
+    display: inline;
+}
+
 td form button {
     border: none !important;
     background: none !important;
-    color: #cc0000 !important;
     padding: 0 !important;
     border-radius: 0 !important;
-    opacity: 0.6;
-    text-decoration: none !important;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--archive-red) !important;
+    opacity: 0.8;
+    box-shadow: none !important;
+    transform: none !important;
 }
 
 td form button:hover {
     opacity: 1;
-    text-decoration: underline !important;
+    text-decoration: underline;
 }
+
 td[colspan="5"] {
     text-align: center;
     color: var(--ink-grey);
-    padding: 50px;
+    padding: 45px;
 }
 
+@media (max-width: 900px) {
+    body > div > div:first-child {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
+    body > div > div:first-child > div {
+        width: 100%;
+        flex-direction: column;
+    }
 
+    button a {
+        display: block;
+        text-align: center;
+    }
 
-
-
-
+    h1 {
+        font-size: 2.3rem;
+    }
+}
