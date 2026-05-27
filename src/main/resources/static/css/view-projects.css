@@ -120,21 +120,21 @@ tbody tr:hover {
     background: #fafafa;
 }
 
-td a {
+table tbody tr td a {
     text-decoration: none;
     font-weight: 700;
 }
 
-td a:hover {
+table tbody tr td a:hover {
     text-decoration: underline;
     text-underline-offset: 4px;
 }
 
-td a.project-link {
+table tbody tr td a.project-link {
     color: var(--project-blue);
 }
 
-td a.edit-link {
+table tbody tr td a.edit-link {
     color: var(--edit-dark-blue);
 }
 
@@ -142,22 +142,24 @@ td form {
     display: inline;
 }
 
-td form button {
-    border: none !important;
-    background: none !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
+table tbody tr td form button.archive-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    border-radius: 0;
     font-size: 0.95rem;
     font-weight: 700;
-    color: var(--archive-red) !important;
+    color: var(--archive-red);
     opacity: 0.8;
-    box-shadow: none !important;
-    transform: none !important;
+    box-shadow: none;
+    transform: none;
 }
 
-td form button:hover {
+table tbody tr td form button.archive-btn:hover {
     opacity: 1;
     text-decoration: underline;
+    background: none;
+    color: var(--archive-red);
 }
 
 td[colspan="5"] {

@@ -36,17 +36,17 @@
 
 		<tr th:each="pj: ${projects}">
 			<td>
-				<a th:href="@{/projects/{projectId}/subprojects(projectId=${pj.projectId})}"
+				<a class="project-link" th:href="@{/projects/{projectId}/subprojects(projectId=${pj.projectId})}"
 				   th:text="${pj.projectName}">Project Name</a>
 			</td>
 			<td th:text="${pj.companyName}">Company</td>
 			<td th:text="${#temporals.format(pj.deadline, 'dd-MM-yyyy')}">Deadline</td>
 			<td th:text="${#temporals.format(pj.createdAt, 'dd-MM-yyyy HH:mm')}">Created</td>
 			<td>
-				<a th:href="@{/projects/{projectId}/edit-form(projectId=${pj.projectId})}">Edit</a> |
+				<a class="edit-link" th:href="@{/projects/{projectId}/edit-form(projectId=${pj.projectId})}">Edit</a> |
 
 				<form th:action="@{/archive/project/{projectId}/archive(projectId=${pj.projectId})}" th:method="POST">
-					<button type="submit" th:data-name="${pj.projectName}" onclick="return confirm('Are you sure you want to archive ' + this.getAttribute('data-name') + '?')">
+					<button type="submit" class="archive-btn" th:data-name="${pj.projectName}" onclick="return confirm('Are you sure you want to archive ' + this.getAttribute('data-name') + '?')">
 						Archive
 					</button>
 				</form>
