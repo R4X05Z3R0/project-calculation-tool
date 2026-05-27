@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
+
+// Praktisk talt " Kalkulationsværktøjet".
+
 // Sætter arbejdstiden fra Projektet i en "reel" tidsrelation ifht.
 // en arbejdsuge med weekenden inkluderet for at bedre estimere "estimated finish date."
+// beregner arbejsdage, forventet slutdato baseret på arbejdsbyrde og arbejdsstyrke baseret på employee (project_employee),
+// tjekker om projektet er "on track" ifht. deadline.
 
 @Service
 public class PlannerService {
@@ -71,13 +76,14 @@ public class PlannerService {
 
         return planner;
     }
-    //Tjekker - "er denne dag en Arbejdsdag ? "
+    //Tjekker - "er denne dag en Arbejdsdag ? " bruges i "addworkdays" og "countWorkdaysbetween"
     private boolean isWorkDay(LocalDate date) {
         DayOfWeek day = date.getDayOfWeek();
 
         return day != DayOfWeek.SATURDAY
                 && day != DayOfWeek.SUNDAY;
     }
+    // udregner arbejdsdage baseret på Workload fra Project og Workforce fra project_employee tabel
     private int calculateWorkDays(double workloadHours, double workforceDailyHours) {
         if (workloadHours <= 0) {
             return 0;
@@ -90,6 +96,7 @@ public class PlannerService {
         return (int) Math.ceil(workloadHours / workforceDailyHours);
     }
 
+ // tæller hverdage frem for at finde forventet slutdato
     private LocalDate addWorkDays(LocalDate startDate, int workDays) {
         LocalDate date = startDate;
         int addedDays = 0;
@@ -105,7 +112,7 @@ public class PlannerService {
         return date;
     }
 
-
+ //Tæller hverdage mellem datoer for at se hvor mange arbejdsdage der er mellem de to. Bruges til at tjekke deadline - om projektet er
     private int countWorkDaysBetween(LocalDate from, LocalDate to) {
         int count = 0;
         LocalDate date = from;
@@ -121,7 +128,8 @@ public class PlannerService {
         return count;
     }
 
-    // Price calculator - presumes a 250 average pay per Hour for workers.
+    // Prisudregner til prisestimat baseret på timer.
+    //TODO Skal udvides til at enten kunne sættes af bruger eller bruge individuelle lønninger der tilføjes employees
     public double calculateStandardPriceEstimate(double workloadHours) {
         return workloadHours * 250;
     }

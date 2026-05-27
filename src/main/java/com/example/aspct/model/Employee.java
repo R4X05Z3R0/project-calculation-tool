@@ -1,5 +1,6 @@
 package com.example.aspct.model;
 
+// Employee, har stadig competency_id for senere udvidelser.  
 
 public class Employee {
 
