@@ -9,18 +9,21 @@
 <body>
 
 <div>
-	<!-- Dynamic back link using the subProjectId from the parent subproject object -->
-	<p><a th:href="@{/projects/{subProjectId}/subprojects(subProjectId = ${subProject.projectId})}">← Back to Subproject</a></p>
+	<p class="back-link"><a th:href="@{/projects/{subProjectId}/subprojects(subProjectId = ${subProject.projectId})}">← Back to Subproject</a></p>
 
-	<h1 th:text="'Tasks for: ' + ${subProject.name}">Subproject Name</h1>
-	<button><a th:href="@{/tasks/create-form(subProjectId=${subProject.subProjectId})}">+ New Task</a></button>
-	<p th:text="${subProject.description}">Subproject Description</p>
-	<p th:text="'Approximately ' + ${totalHours} + ' hours'">Total Hours</p>
-</div>
+	<div class="header-container">
+		<div class="header-content">
+			<h1 th:text="'Tasks for: ' + ${subProject.name}">Subproject Name</h1>
+			<p class="project-desc" th:text="${subProject.description}">Subproject Description</p>
+			<p class="project-hours" th:text="'Approximately ' + ${totalHours} + ' hours'">Total Hours</p>
+		</div>
+		<div class="header-actions">
+			<button><a th:href="@{/tasks/create-form(subProjectId=${subProject.subProjectId})}">+ New Task</a></button>
+		</div>
+	</div>
 
-<hr>
+	<hr>
 
-<div>
 	<table>
 		<thead>
 		<tr>
@@ -32,38 +35,27 @@
 		</tr>
 		</thead>
 		<tbody>
-		<!-- Displayed if the tasks list passed from the controller is empty -->
 		<tr th:if="${#lists.isEmpty(tasks)}">
 			<td colspan="5">No tasks found for this subproject.</td>
 		</tr>
 
-		<!-- Loop through the List<Task> -->
 		<tr th:each="task : ${tasks}">
-			<td th:text="${task.name}">
-				Task Name
-				<!-- Dynamic link to view a specific task's details if needed -->
-<!--				<a th:href="@{/tasks/{id}(id=${task.taskId})}"-->
-<!--				   th:text="${task.name}">Task Name</a>-->
-			</td>
+			<td class="project-blue" th:text="${task.name}">Task Name</td>
 
-			<!-- Renders the double value for estimated hours -->
 			<th:block th:with="hoursLabel=${task.estimatedHours == 1.0} ? ' hour' : ' hours'">
 				<td th:text="${task.estimatedHours} + ${hoursLabel}">0.0 hours</td>
 			</th:block>
 
-			<!-- Formats the LocalDate field -->
 			<td th:text="${#temporals.format(task.deadline, 'dd-MM-yyyy')}">Deadline</td>
 
 			<td th:text="${task.description}">Description text...</td>
-			<td>
-				<!-- Dynamic action links using taskId -->
-				<a th:href="@{/tasks/{taskId}/edit (taskId=${task.taskId})}">Edit</a> |
-				<form th:action="@{/tasks/{taskId}/delete(taskId=${task.taskId})}" method="post" style="display:inline; margin-left: 5px;">
-					<!-- We supply the active parent project ID so the controller can return here -->
+
+			<td class="actions-cell">
+				<a class="edit-link" th:href="@{/tasks/{taskId}/edit (taskId=${task.taskId})}">Edit</a>
+				<span class="actions-separator">|</span>
+				<form th:action="@{/tasks/{taskId}/delete(taskId=${task.taskId})}" method="post">
 					<input type="hidden" name="subProjectId" th:value="${subProject.subProjectId}" />
-					<button type="submit"
-					        style="background:none; border:none; color:red; text-decoration:none; cursor:pointer; padding:0; font-family:inherit; font-size:inherit;"
-					        th:attr="onclick='return confirm(\'Are you sure you want to delete ' + ${task.name} + '?\');'">
+					<button type="submit" class="delete-btn" th:attr="onclick='return confirm(\'Are you sure you want to delete ' + ${task.name} + '?\');'">
 						Delete
 					</button>
 				</form>
