@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// Service lag - Gemmer Sub-projekter og deres tasks i databasen.
+// Service lag - Gemmer Sub-projekter og indlæser deres tasks fra databasen.
 // udregner getTotalHoursForProject baseret på en liste af alle Sub-Projekter.
 //
 
@@ -21,7 +21,7 @@ public class SubProjectService {
         this.taskService = taskService;
     }
 
-    // Laver liste af Sub-projekter med samme ProjectID
+    // Laver liste af Sub-projekter med samme ProjectID uden deres tasks.
 
     public List<SubProject> getSubProjectsByProjectId(int projectId) {
         return subProjectRepository.findByProjectId(projectId);

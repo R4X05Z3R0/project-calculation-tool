@@ -30,7 +30,7 @@ public class EmployeeRepository {
         return jdbcTemplate.query(sql, employeeRowMapper);
     }
 
-// Tilføjer en medarbejder til  et "connector table" af Project ID og  Employee ID så man kan se hvem der er tilføjet.
+// Tilføjer en medarbejder og project ID til en "Workforce liste" af Project ID og  Employee ID.
 
     public void addEmployeeToProject(int projectId, int employeeId) {
         String sql = """

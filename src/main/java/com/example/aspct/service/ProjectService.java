@@ -7,7 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-//  Service - Gemmer Projekter og deres Sub-projekter i Databasen.
+//  Service - Gemmer Projekter og læser deres Sub-projekter i Databasen.
 @Service
 public class ProjectService {
 
@@ -19,7 +19,6 @@ public class ProjectService {
         this.subProjectService = subProjectService;
     }
 
-    //I am adding the comments so I don't get confused... It isn't AI. Just saying.
 
     // GET all projects — lists empty here; totals calculated via SubProjectService
 
